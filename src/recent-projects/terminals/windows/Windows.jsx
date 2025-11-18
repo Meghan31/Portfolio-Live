@@ -121,8 +121,7 @@ const Windows = () => {
 								>
 									[TECHNOLOGIES]
 								</span>{' '}
-								TypeScript, React, Express, PostgreSQL, JWT, Prisma, GCP,
-								TailwindCSS
+								TypeScript, Docker, React, Express, PostgreSQL, JWT, Prisma, GCP, TailwindCSS
 							</p>
 						</div>
 					</div>

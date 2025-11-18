@@ -121,7 +121,7 @@ const Ubuntu = () => {
 						</div>
 						<div className="output-section">
 							<div className="project-description">
-								<div
+								{/* <div
 									className="section-header"
 									style={{
 										fontFamily: 'monospace',
@@ -139,7 +139,15 @@ const Ubuntu = () => {
 									drawing board, enabling users to seamlessly collaborate on
 									both code and visuals in a shared environment, improving
 									workflow and creativity.
-								</p>
+								</p> */}
+								<p style={{
+										fontFamily: 'monospace',
+									}}>
+						• Architected enterprise-grade real-time collaboration platform with
+						Redis-backed distributed architecture and horizontal auto-scaling,
+						supporting 1000+ concurrent WebSocket connections with &lt;100ms P99
+						latency and 99%+ uptime in production
+					</p>
 							</div>
 							<div
 								className="project-description"
@@ -147,7 +155,7 @@ const Ubuntu = () => {
 									fontFamily: 'monospace',
 								}}
 							>
-								<div
+								{/* <div
 									className="section-header"
 									style={{
 										fontFamily: 'monospace',
@@ -165,7 +173,15 @@ const Ubuntu = () => {
 									users, and implemented secure session management protocols to
 									ensure data integrity and smooth, uninterrupted collaboration
 									across various platforms.
-								</p>
+								</p> */}
+								<p style={{
+										fontFamily: 'monospace',
+									}}>
+						• Established end-to-end DevOps excellence through containerized
+						Docker deployments, automated CI/CD pipelines via GitHub Actions,
+						comprehensive observability using Prometheus/Grafana, and 85% test
+						coverage, enabling zero-downtime releases
+					</p>
 							</div>
 						</div>
 						<div className="prompt-line">
@@ -212,9 +228,8 @@ const Ubuntu = () => {
 						</div>
 						<div className="tech-section">
 							<p>
-								Technologies Used: React, Node.js, Express, WebSockets,
-								JavaScript, Collaborative Environment, Git/GitHub, Jest
-							</p>
+						Technologies Used: Node.js, Socket.IO, Redis, Docker, Cloud Infrastructure, AWS, Jest, CI/CD, React, Express, WebSockets, JavaScript, Collaborative Environment, Git/GitHub, Jest.
+					</p>
 						</div>
 					</div>
 				</div>

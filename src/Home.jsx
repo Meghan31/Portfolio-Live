@@ -7,6 +7,7 @@ import Contact from './contact/Contact';
 import Footer from './footer/Footer';
 import MobileView from './MobileView';
 import Projects from './projects/Projects';
+// import ProjectSection from './ProjectSection';
 import RecentProjects from './recent-projects/RecentProjects';
 // import ResponselessScreen from './ResponselessScreen';
 import Skills from './skills/Skills';
@@ -22,30 +23,40 @@ const Home = () => {
 
 			{/* Desktop version - shown/hidden via CSS */}
 			<div className="desktop-only">
-				<section id="Home" style={{ height: '100vh' }}>
+				<section id="home" style={{ height: '100vh' }}>
 					<Navbar />
 					<div id="profile">
 						<Details />
 					</div>
 				</section>
-				<section id="About" style={{ height: '100vh' }}>
+				<section id="about" style={{ height: '100vh' }}>
 					<About />
 				</section>
-				<section id="Career" style={{}}>
+				<section id="career" style={{}}>
 					<CareerPage />
 				</section>
 				<section id="recents" style={{ marginBottom: '100px' }}>
 					<RecentProjects />
 				</section>
-				<section id="Projects" style={{}}>
+				{/* <section id="ProjectSection" style={{ height: '100vh' }}>
+					<ProjectSection />
+				</section> */}
+				<section
+					id="projects"
+					style={{
+						background:
+							'linear-gradient(to bottom, white 0%, white 10%, #C4E7FF 10%, #C4E7FF 90%, #487DFF 90%, #487DFF 100%)',
+					}}
+				>
 					<Projects />
 				</section>
-				<section id="Footer" style={{}}>
+
+				<section id="skills" style={{}}>
 					<Skills />
 				</section>
-				<section id="Contact" style={{ height: '100vh' }}>
+				<section id="contact" style={{ height: '100vh' }}>
 					<Contact />
-					<Footer />
+					<Footer id="footer" />
 				</section>
 			</div>
 		</>

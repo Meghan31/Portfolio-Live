@@ -4,16 +4,20 @@ const ToDo = () => {
 	return (
 		<TypeAnimation
 			sequence={[
-				"I'm a Web Developer",
+				"I'm a Software Engineer",
 				2000,
-				"I'm a Mobile App Developer",
+				"Specializes in Backend",
 				2000,
-				"I'm a Designer",
+				"A Cloud Enthusiast",
 				2000,
-				"I'm a Backend Engineer",
+				"And a Full Stack Engineer",
 				2000,
-				"I'm a Student",
+				"I develop Web and Mobile Apps",
 				2000,
+				"A Design Lover",
+				2000,
+				
+				
 			]}
 			wrapper="span"
 			speed={10}

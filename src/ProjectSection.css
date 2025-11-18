@@ -1,0 +1,111 @@
+/* src/ProjectSection.css
+   Kept: full-bleed layout + gentle current animations.
+   Changed: explicit non-overlapping placements, vertical offsets,
+            smaller widths and subtle inner shadow so strokes never touch.
+*/
+
+.project-section {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+  border: 0;
+}
+
+/* sky */
+.ps-sky {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 56px;
+  background: #cfeafe;
+  pointer-events: none;
+}
+
+/* horizon / water */
+.ps-horizon {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 56px;
+  background: #5277f2;
+  pointer-events: none;
+  overflow: visible;
+}
+
+/* base stroke: strictly horizontal and visually separated */
+.ps-stroke {
+  position: absolute;
+  height: 4px;                     /* thickness */
+  background: #fff;
+  border-radius: 999px;
+  opacity: 0.98;
+  pointer-events: none;
+  transform: translateZ(0);
+  will-change: transform;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.03) inset; /* subtle inner separation */
+}
+
+/* ----- Carefully spaced placements (no overlaps) ----- */
+/* The left + width values are chosen so strokes don't collide.
+   Vertical offsets (bottom) place strokes on slightly different vertical bands.
+   You can tweak these numbers a little if you want different spacing. */
+
+.s1 { left: 2vw;  bottom: 14px; width: 16vw; animation-delay: -1s; }
+.s2 { left: 22vw; bottom: 18px; width: 12.5vw; animation-delay: -2.2s; }
+.s3 { left: 38.5vw; bottom: 12px; width: 10.5vw; animation-delay: -3.5s; }
+.s4 { left: 52.5vw; bottom: 18px; width: 9.5vw; animation-delay: -1.4s; }
+.s5 { left: 64.5vw; bottom: 10px; width: 22vw;  height:6px; animation-delay: -4.2s; }
+.s6 { left: 88.8vw; bottom: 14px; width: 8vw; animation-delay: -2.6s; }
+.s7 { left: 75vw;  bottom: 22px; width: 12vw; animation-delay: -5s; }
+.s8 { left: 46vw;  bottom: 22px; width: 2.5vw; animation-delay: -2.1s; }
+.s9 { left: 30vw;  bottom: 20px; width: 11vw; animation-delay: -3.9s; }
+
+/* Make sure there is a small gap buffer between items on narrow screens too */
+@media (max-width: 900px) {
+  .s1 { width: 20vw; left: 3vw; }
+  .s2 { left: 26vw; width: 14vw; }
+  .s3 { left: 44vw; width: 13vw; }
+  .s4 { left: 60vw; width: 10vw; }
+  .s5 { left: 68vw; width: 45vw; } /* long stroke becomes adaptive but left is pushed right */
+  .s7 { left: 70vw; width: 18vw; }
+  .s9 { left: 36vw; width: 18vw; }
+}
+
+/* ---------- gentle current animations (same as before) ---------- */
+@keyframes current-slow {
+  0%   { transform: translateX(-6%); }
+  50%  { transform: translateX(6%); }
+  100% { transform: translateX(-6%); }
+}
+@keyframes current-med {
+  0%   { transform: translateX(-10%); }
+  50%  { transform: translateX(10%); }
+  100% { transform: translateX(-10%); }
+}
+@keyframes current-fast {
+  0%   { transform: translateX(-14%); }
+  50%  { transform: translateX(14%); }
+  100% { transform: translateX(-14%); }
+}
+
+/* apply animation with staggered durations/delays for organic motion */
+.s1 { animation: current-slow 13s cubic-bezier(.25,.7,.35,1) infinite; }
+.s2 { animation: current-med 10s cubic-bezier(.25,.7,.35,1) infinite; }
+.s3 { animation: current-slow 15s cubic-bezier(.25,.7,.35,1) infinite; }
+.s4 { animation: current-med 11s cubic-bezier(.25,.7,.35,1) infinite; }
+.s5 { animation: current-slow 20s cubic-bezier(.25,.7,.35,1) infinite; }
+.s6 { animation: current-fast 8.5s cubic-bezier(.25,.7,.35,1) infinite; }
+.s7 { animation: current-slow 16s cubic-bezier(.25,.7,.35,1) infinite; }
+.s8 { animation: current-fast 7s cubic-bezier(.25,.7,.35,1) infinite; }
+.s9 { animation: current-med 12s cubic-bezier(.25,.7,.35,1) infinite; }
+
+/* reduced motion respect */
+@media (prefers-reduced-motion: reduce) {
+  .ps-stroke { animation: none !important; transition: none !important; }
+}

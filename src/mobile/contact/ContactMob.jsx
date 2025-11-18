@@ -1,48 +1,49 @@
 import emailjs from '@emailjs/browser';
 // import { motion } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import './ContactMob.scss';
 
-// const variants = {
-// 	initial: {
-// 		y: 100,
-// 		opacity: 0,
-// 	},
-// 	animate: {
-// 		y: 0,
-// 		opacity: 1,
-// 		transition: {
-// 			duration: 0.5,
-// 			staggerChildren: 0.1,
-// 		},
-// 	},
-// };
+// (your commented variants kept out)
 
-// const itemVariants = {
-// 	initial: {
-// 		opacity: 0,
-// 		y: 20,
-// 	},
-// 	animate: {
-// 		opacity: 1,
-// 		y: 0,
-// 		transition: {
-// 			duration: 0.4,
-// 		},
-// 	},
-// };
+const RATE_LIMIT_SECONDS = 60; // 60s between sends
 
 const ContactMob = () => {
-	const formRef = useRef();
+	const formRef = useRef(null);
 	const [error, setError] = useState(false);
 	const [success, setSuccess] = useState(false);
 	const [showPopup, setShowPopup] = useState(false);
 	const [popupMessage, setPopupMessage] = useState('');
+	const [sending, setSending] = useState(false);
 	const [formData, setFormData] = useState({
 		name: '',
 		email: '',
 		message: '',
 	});
+	const [lastSent, setLastSent] = useState(() => {
+		const v = localStorage.getItem('contactmob_last_sent');
+		return v ? Number(v) : 0;
+	});
+
+	useEffect(() => {
+		localStorage.setItem('contactmob_last_sent', String(lastSent || 0));
+	}, [lastSent]);
+
+	const showTemporaryPopup = (msg, ms = 3000) => {
+		setPopupMessage(msg);
+		setShowPopup(true);
+		setTimeout(() => setShowPopup(false), ms);
+	};
+
+	const secondsRemaining = () => {
+		const now = Date.now();
+		const diff = Math.ceil((RATE_LIMIT_SECONDS * 1000 - (now - lastSent)) / 1000);
+		return diff > 0 ? diff : 0;
+	};
+
+	const isRateLimited = () => {
+		if (!lastSent) return false;
+		return Date.now() - lastSent < RATE_LIMIT_SECONDS * 1000;
+	};
 
 	const handleChange = (e) => {
 		setFormData({
@@ -51,8 +52,18 @@ const ContactMob = () => {
 		});
 	};
 
-	const sendEmail = (e) => {
-		e.preventDefault();
+	const sendEmail = async (e) => {
+		if (e && e.preventDefault) e.preventDefault();
+
+		// block duplicate sends while in-flight
+		if (sending) return;
+
+		// enforce rate limit (but don't block click so we can show popup)
+		if (isRateLimited()) {
+			const secs = secondsRemaining();
+			showTemporaryPopup(`Please wait ${secs}s before sending again (60s).`, 3500);
+			return;
+		}
 
 		if (!formData.name || !formData.email || !formData.message) {
 			setPopupMessage('Please fill in all the fields.');
@@ -60,52 +71,52 @@ const ContactMob = () => {
 			setTimeout(() => setShowPopup(false), 3000);
 			return;
 		}
+		if (formData.email.toString().indexOf('@') === -1) {
+			setError(true);
+			setPopupMessage('Please enter a valid email address.');
+			setShowPopup(true);
+			setTimeout(() => setShowPopup(false), 3000);
+			return;
+		}
 
-		emailjs
-			.sendForm(
+		setSending(true);
+		setError(false);
+		setSuccess(false);
+
+		try {
+			// Replace these with your actual EmailJS ids:
+			await emailjs.sendForm(
 				'service_yzzvxt8',
 				'template_afzlwkl',
 				formRef.current,
 				'_nz2V_63IJghT6BSH'
-			)
-			.then(
-				() => {
-					setPopupMessage('Message sent successfully!');
-					setSuccess(true);
-					setError(false);
-					setShowPopup(true);
-					setFormData({ name: '', email: '', message: '' });
-					setTimeout(() => setShowPopup(false), 3000);
-				},
-				() => {
-					setPopupMessage('Something went wrong...');
-					setError(true);
-					setSuccess(false);
-					setShowPopup(true);
-					setTimeout(() => setShowPopup(false), 3000);
-				}
 			);
+
+			setPopupMessage('Message sent successfully!');
+			setSuccess(true);
+			setError(false);
+			setShowPopup(true);
+			setFormData({ name: '', email: '', message: '' });
+			setLastSent(Date.now());
+			setTimeout(() => setShowPopup(false), 3000);
+		} catch (err) {
+			console.error('EmailJS error:', err);
+			setPopupMessage('Something went wrong...');
+			setError(true);
+			setSuccess(false);
+			setShowPopup(true);
+			setTimeout(() => setShowPopup(false), 3000);
+		} finally {
+			setSending(false);
+		}
 	};
 
 	return (
 		<div className="contact-mob-wrapper">
-			<div
-				className="contact-mob"
-				// // // variants={variants}
-				// initial="initial"
-				// whileInView="animate"
-			>
-				<div
-					className="contact-header"
-					// // // variants={variants}
-				>
+			<div className="contact-mob">
+				<div className="contact-header">
 					<h1>Let&apos;s Connect</h1>
-					<div
-						className="header-underline"
-						// initial={{ width: 0 }}
-						// animate={{ width: '60px' }}
-						// transition={{ delay: 0.5, duration: 0.8 }}
-					/>
+					<div className="header-underline" />
 					<p>
 						I&apos;m always open to discussing new projects, opportunities, or
 						just having a chat!
@@ -113,14 +124,8 @@ const ContactMob = () => {
 				</div>
 
 				<div className="contact-content">
-					<div
-						className="contact-info"
-						// // // variants={variants}
-					>
-						<div
-							className="info-item"
-							// variants={itemVariants}
-						>
+					<div className="contact-info">
+						<div className="info-item">
 							<div className="info-icon">
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -152,10 +157,7 @@ const ContactMob = () => {
 								</span>
 							</div>
 						</div>
-						<div
-							className="info-item"
-							// variants={itemVariants}
-						>
+						<div className="info-item">
 							<div className="info-icon">
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -172,13 +174,10 @@ const ContactMob = () => {
 							</div>
 							<div className="info-content">
 								<h2>Address</h2>
-								<span>1350 20th St, Boulder, CO 80302</span>
+								<span>Boulder, CO 80302</span>
 							</div>
 						</div>
-						<div
-							className="info-item"
-							// variants={itemVariants}
-						>
+						{/* <div className="info-item">
 							<div className="info-icon">
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -196,15 +195,10 @@ const ContactMob = () => {
 								<h2>Phone</h2>
 								<span>+1 970-694-0036</span>
 							</div>
-						</div>
+						</div> */}
 					</div>
 
-					<div
-						className="contact-form-container"
-						// initial={{ opacity: 0, y: 50 }}
-						// whileInView={{ opacity: 1, y: 0 }}
-						// transition={{ delay: 0.3, duration: 0.8 }}
-					>
+					<div className="contact-form-container">
 						<div className="form-header">
 							<h2>Send a Message</h2>
 						</div>
@@ -243,12 +237,13 @@ const ContactMob = () => {
 									<div className="input-underline"></div>
 								</div>
 
-								<div
-									className="button-container"
-									// whileHover={{ scale: 1.05 }}
-									// whileTap={{ scale: 0.95 }}
-								>
-									<button type="submit" onClick={sendEmail}>
+								<div className="button-container">
+									<button
+										type="submit"
+										onClick={sendEmail}
+										disabled={sending}
+										aria-disabled={sending}
+									>
 										<span style={{ fontFamily: 'Bytesized' }}>
 											Send Message
 										</span>
@@ -276,9 +271,6 @@ const ContactMob = () => {
 						className={`popup-message ${
 							success ? 'success' : error ? 'error' : ''
 						}`}
-						// initial={{ opacity: 0, y: 20 }}
-						// animate={{ opacity: 1, y: 0 }}
-						// exit={{ opacity: 0, y: 20 }}
 						style={{ fontFamily: 'Bytesized' }}
 					>
 						<div className="popup-icon">

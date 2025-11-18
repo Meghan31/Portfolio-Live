@@ -25,7 +25,8 @@ const itemVariants = {
 };
 
 const Links = () => {
-	const items = ['Home', 'About', 'Career', 'Projects', 'Contact'];
+	const items = ['home', 'about', 'career', 'recents', 'contact'];
+	const CapItems = ['Home', 'About', 'Career', 'Projects', 'Contact'];
 	const handleScroll = (id) => {
 		const element = document.getElementById(id);
 		if (element) {
@@ -44,7 +45,7 @@ const Links = () => {
 					whileHover={{ scale: 1.1 }}
 					whileTap={{ scale: 0.9 }}
 				>
-					{item}
+					{CapItems[items.indexOf(item)]}
 				</motion.a>
 			))}
 		</motion.div>

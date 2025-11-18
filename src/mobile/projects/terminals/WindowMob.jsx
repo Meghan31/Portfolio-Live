@@ -189,8 +189,7 @@ const WindowMob = () => {
 				</div>
 				<div className="tech-windows-mob">
 					<p>
-						<p className="ps-output-tag-mob">[TECHNOLOGIES]</p> TypeScript,
-						React, Express, PostgreSQL, JWT, Prisma, GCP, TailwindCSS
+						<p className="ps-output-tag-mob">[TECHNOLOGIES]</p> TypeScript, Docker, React, Express, PostgreSQL, JWT, Prisma, GCP, TailwindCSS
 					</p>
 				</div>
 			</div>

@@ -24,8 +24,8 @@ const Navbar = () => {
 				<div className="header">
 					<motion.a
 						className="header1"
-						// href="#Home"
-						onClick={() => handleScroll('Home')}
+						// href="#home"
+						onClick={() => handleScroll('home')}
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						transition={{ duration: 0.2, delay: 0.2 }}
@@ -34,8 +34,8 @@ const Navbar = () => {
 					</motion.a>
 					<motion.a
 						className="header2"
-						// href="#About"
-						onClick={() => handleScroll('About')}
+						// href="#about"
+						onClick={() => handleScroll('about')}
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						transition={{ duration: 2, delay: 0.4 }}
@@ -44,8 +44,8 @@ const Navbar = () => {
 					</motion.a>
 					<motion.a
 						className="header3"
-						// href="#Career"
-						onClick={() => handleScroll('Career')}
+						// href="#career"
+						onClick={() => handleScroll('career')}
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						transition={{ duration: 2, delay: 0.6 }}
@@ -54,8 +54,8 @@ const Navbar = () => {
 					</motion.a>
 					<motion.a
 						className="header4"
-						// href="#Projects"
-						onClick={() => handleScroll('Projects')}
+						// href="#recents" projects
+						onClick={() => handleScroll('recents')}
 						initial={{ opacity: 0, scale: 1 }}
 						animate={{ opacity: 1, scale: 1 }}
 						transition={{ duration: 2, delay: 0.8 }}
@@ -64,8 +64,8 @@ const Navbar = () => {
 					</motion.a>
 					<motion.a
 						className="header5"
-						// href="#Contact"
-						onClick={() => handleScroll('Contact')}
+						// href="#contact"
+						onClick={() => handleScroll('contact')}
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						transition={{ duration: 2, delay: 1 }}
