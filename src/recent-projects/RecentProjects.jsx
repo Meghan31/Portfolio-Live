@@ -1,7 +1,9 @@
 import './RecentProjects.scss';
 import MacOS from './terminals/mac/MacOS';
+import MacOS2 from './terminals/mac/MacOS2';
 import Ubuntu from './terminals/ubuntu/Ubuntu';
 import Windows from './terminals/windows/Windows';
+import Windows2 from './terminals/windows/Windows2';
 
 const RecentProjects = () => {
 	return (
@@ -23,9 +25,11 @@ const RecentProjects = () => {
 				</div>
 				<div className="mac">
 					<MacOS />
+					{/* <MacOS2 /> */}
 				</div>
 				<div className="windows">
 					<Windows />
+					{/* <Windows2 /> */}
 				</div>
 			</div>
 		</div>

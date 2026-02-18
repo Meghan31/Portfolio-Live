@@ -12,7 +12,7 @@ export default function Resume() {
 
 		{
 			shouldResizeCanvasToContainer: true,
-		}
+		},
 	);
 
 	return (
@@ -20,7 +20,7 @@ export default function Resume() {
 			className="rive-resume"
 			onClick={() => {
 				const link = document.createElement('a');
-				link.href = '/assets/Meghan_SDE_Resume.pdf';
+				link.href = '/assets/Megha_SWE_Resume.pdf';
 
 				link.download = 'Portfolio-Guy-Megha_CV.pdf';
 				link.click();

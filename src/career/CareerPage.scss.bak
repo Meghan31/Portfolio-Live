@@ -1,0 +1,913 @@
+// 🎨 ULTRA DETAILED CARTOON LANDSCAPE STYLES
+
+.career-landscape {
+	position: relative;
+	width: 100%;
+	height: 3200px;
+	overflow: hidden;
+	background: #7ec850;
+}
+
+// 🌤️ SECTION 1 — SKY STRIP
+.sky-section {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 280px;
+	background: linear-gradient(to bottom, #87ceeb 0%, #a8e6cf 100%);
+	z-index: 1;
+}
+
+// 🌿 SECTION 2 — ROLLING HILLS HORIZON
+.horizon-hills {
+	position: absolute;
+	top: 250px;
+	left: 0;
+	width: 100%;
+	height: 100px;
+	z-index: 2;
+	overflow: hidden;
+
+	.hill {
+		position: absolute;
+		background: linear-gradient(
+			to bottom,
+			#5dbb3f 0%,
+			#5dbb3f 65%,
+			#3e9c2a 65%,
+			#3e9c2a 100%
+		);
+		border: 3px solid #000;
+		border-bottom: none;
+
+		&.hill-1 {
+			width: 45%;
+			height: 140px;
+			left: -5%;
+			top: 0;
+			border-radius: 50% 50% 0 0 / 60% 60% 0 0;
+		}
+
+		&.hill-2 {
+			width: 40%;
+			height: 90px;
+			left: 30%;
+			top: 35px;
+			border-radius: 50% 50% 0 0 / 70% 70% 0 0;
+		}
+
+		&.hill-3 {
+			width: 50%;
+			height: 120px;
+			right: -10%;
+			top: 10px;
+			border-radius: 50% 50% 0 0 / 65% 65% 0 0;
+		}
+	}
+}
+
+// 🏔️ SECTION 3 — BACKGROUND HILLS (Parallax)
+.background-hills {
+	position: absolute;
+	top: 400px;
+	left: 0;
+	width: 100%;
+	height: 600px;
+	z-index: 3;
+	transform: translateZ(-10px) scale(1.03);
+	will-change: transform;
+
+	.bg-hill {
+		position: absolute;
+		background: linear-gradient(135deg, #a8c88a, #8fb87a);
+		opacity: 0.7;
+		border-radius: 50%;
+
+		&.bg-hill-1 {
+			width: 500px;
+			height: 350px;
+			left: -100px;
+			top: 100px;
+		}
+
+		&.bg-hill-2 {
+			width: 600px;
+			height: 400px;
+			right: 10%;
+			top: 50px;
+		}
+
+		&.bg-hill-3 {
+			width: 450px;
+			height: 320px;
+			left: 35%;
+			top: 150px;
+		}
+	}
+}
+
+// 🌱 SECTION 4 — MAIN GRASS FIELD
+.grass-field {
+	position: absolute;
+	top: 350px;
+	left: 0;
+	width: 100%;
+	height: 2850px;
+	background: radial-gradient(
+		ellipse at center,
+		#92d45e 0%,
+		#7ec850 40%,
+		#6bbf45 100%
+	);
+	z-index: 4;
+	overflow: hidden;
+}
+
+// 💡 ATMOSPHERIC SUN GLOW
+.sun-glow {
+	position: absolute;
+	top: 100px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 800px;
+	height: 800px;
+	background: radial-gradient(
+		circle,
+		rgba(255, 243, 176, 0.15) 0%,
+		transparent 70%
+	);
+	pointer-events: none;
+	z-index: 5;
+}
+
+// 🛤️ CAREER PATH / STEPPING STONES
+.career-path-trail {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 200px;
+	height: 2800px;
+	z-index: 6;
+
+	.path-svg {
+		width: 100%;
+		height: 100%;
+		filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
+
+		path {
+			stroke: #c8a96e;
+			fill: none;
+			stroke-width: 25;
+			stroke-linecap: round;
+		}
+	}
+
+	// Grass tufts along path edges
+	&::before,
+	&::after {
+		content: '';
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		background-image: repeating-linear-gradient(
+			0deg,
+			transparent,
+			transparent 50px,
+			#5dbb3f 50px,
+			#5dbb3f 55px
+		);
+		opacity: 0.3;
+		pointer-events: none;
+	}
+}
+
+// 🌳 CARTOON TREES
+.tree {
+	position: absolute;
+	z-index: 7;
+
+	.trunk {
+		position: absolute;
+		background: linear-gradient(
+			to bottom,
+			#8b5e3c 0%,
+			#8b5e3c 70%,
+			#6b4226 70%,
+			#6b4226 100%
+		);
+		border: 3px solid #000;
+		border-radius: 5px;
+	}
+
+	.canopy {
+		position: absolute;
+		background: #4caf50;
+		border: 3px solid #000;
+		border-radius: 50%;
+
+		&::before {
+			content: '';
+			position: absolute;
+			top: 15%;
+			left: 20%;
+			width: 40%;
+			height: 40%;
+			background: #6dd16d;
+			border-radius: 50%;
+		}
+	}
+
+	// Individual tree positioning and sizing
+	&.tree-1 {
+		left: 15%;
+		top: 400px;
+
+		.trunk {
+			width: 40px;
+			height: 120px;
+			bottom: 0;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+
+		.canopy {
+			width: 140px;
+			height: 130px;
+			bottom: 100px;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+	}
+
+	&.tree-2 {
+		right: 10%;
+		top: 600px;
+
+		.trunk {
+			width: 30px;
+			height: 90px;
+			bottom: 0;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+
+		.canopy {
+			width: 110px;
+			height: 105px;
+			bottom: 75px;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+	}
+
+	&.tree-3 {
+		left: 70%;
+		top: 1000px;
+
+		.trunk {
+			width: 50px;
+			height: 140px;
+			bottom: 0;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+
+		.canopy {
+			width: 160px;
+			height: 150px;
+			bottom: 120px;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+	}
+
+	&.tree-4 {
+		left: 5%;
+		top: 1400px;
+
+		.trunk {
+			width: 35px;
+			height: 100px;
+			bottom: 0;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+
+		.canopy {
+			width: 120px;
+			height: 115px;
+			bottom: 85px;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+	}
+
+	&.tree-5 {
+		right: 20%;
+		top: 1800px;
+
+		.trunk {
+			width: 45px;
+			height: 130px;
+			bottom: 0;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+
+		.canopy {
+			width: 145px;
+			height: 140px;
+			bottom: 110px;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+	}
+
+	&.tree-6 {
+		left: 80%;
+		top: 2200px;
+
+		.trunk {
+			width: 32px;
+			height: 95px;
+			bottom: 0;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+
+		.canopy {
+			width: 115px;
+			height: 108px;
+			bottom: 80px;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+	}
+
+	&.tree-7 {
+		left: 25%;
+		top: 2500px;
+
+		.trunk {
+			width: 38px;
+			height: 110px;
+			bottom: 0;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+
+		.canopy {
+			width: 130px;
+			height: 125px;
+			bottom: 95px;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+	}
+}
+
+// 🍄 CARTOON MUSHROOMS
+.mushroom {
+	position: absolute;
+	z-index: 8;
+
+	.stem {
+		position: absolute;
+		background: #f5f5dc;
+		border: 2.5px solid #000;
+		border-radius: 0 0 20px 20px;
+	}
+
+	.cap {
+		position: absolute;
+		background: #e84040;
+		border: 2.5px solid #000;
+		border-radius: 50% 50% 0 0 / 60% 60% 0 0;
+
+		.dot {
+			position: absolute;
+			background: #fff;
+			border-radius: 50%;
+		}
+	}
+
+	.shadow {
+		position: absolute;
+		background: rgba(0, 0, 0, 0.2);
+		border-radius: 50%;
+	}
+
+	// Individual mushroom positioning
+	&.mushroom-1 {
+		left: 45%;
+		top: 800px;
+
+		.stem {
+			width: 25px;
+			height: 40px;
+			bottom: 0;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+
+		.cap {
+			width: 50px;
+			height: 35px;
+			bottom: 32px;
+			left: 50%;
+			transform: translateX(-50%);
+
+			.dot-1 {
+				width: 8px;
+				height: 8px;
+				top: 8px;
+				left: 12px;
+			}
+
+			.dot-2 {
+				width: 6px;
+				height: 6px;
+				top: 12px;
+				right: 10px;
+			}
+
+			.dot-3 {
+				width: 7px;
+				height: 7px;
+				bottom: 8px;
+				left: 25px;
+			}
+		}
+
+		.shadow {
+			width: 35px;
+			height: 8px;
+			bottom: -5px;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+	}
+
+	&.mushroom-2 {
+		left: 38%;
+		top: 1200px;
+
+		.stem {
+			width: 18px;
+			height: 30px;
+			bottom: 0;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+
+		.cap {
+			width: 38px;
+			height: 28px;
+			bottom: 25px;
+			left: 50%;
+			transform: translateX(-50%);
+
+			.dot-1 {
+				width: 6px;
+				height: 6px;
+				top: 6px;
+				left: 10px;
+			}
+
+			.dot-2 {
+				width: 5px;
+				height: 5px;
+				top: 10px;
+				right: 8px;
+			}
+		}
+
+		.shadow {
+			width: 28px;
+			height: 6px;
+			bottom: -4px;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+	}
+
+	&.mushroom-3 {
+		right: 35%;
+		top: 1600px;
+
+		.stem {
+			width: 22px;
+			height: 35px;
+			bottom: 0;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+
+		.cap {
+			width: 45px;
+			height: 32px;
+			bottom: 28px;
+			left: 50%;
+			transform: translateX(-50%);
+
+			.dot-1 {
+				width: 7px;
+				height: 7px;
+				top: 7px;
+				left: 12px;
+			}
+
+			.dot-2 {
+				width: 6px;
+				height: 6px;
+				top: 9px;
+				right: 10px;
+			}
+
+			.dot-3 {
+				width: 8px;
+				height: 8px;
+				bottom: 6px;
+				left: 20px;
+			}
+		}
+	}
+
+	&.mushroom-4 {
+		left: 42%;
+		top: 2000px;
+
+		.stem {
+			width: 20px;
+			height: 32px;
+			bottom: 0;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+
+		.cap {
+			width: 40px;
+			height: 30px;
+			bottom: 26px;
+			left: 50%;
+			transform: translateX(-50%);
+
+			.dot-1 {
+				width: 6px;
+				height: 6px;
+				top: 7px;
+				left: 11px;
+			}
+
+			.dot-2 {
+				width: 7px;
+				height: 7px;
+				top: 8px;
+				right: 9px;
+			}
+		}
+	}
+
+	&.mushroom-5 {
+		left: 55%;
+		top: 2400px;
+
+		.stem {
+			width: 28px;
+			height: 42px;
+			bottom: 0;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+
+		.cap {
+			width: 52px;
+			height: 36px;
+			bottom: 34px;
+			left: 50%;
+			transform: translateX(-50%);
+
+			.dot-1 {
+				width: 8px;
+				height: 8px;
+				top: 8px;
+				left: 13px;
+			}
+
+			.dot-2 {
+				width: 7px;
+				height: 7px;
+				top: 11px;
+				right: 11px;
+			}
+
+			.dot-3 {
+				width: 7px;
+				height: 7px;
+				bottom: 7px;
+				left: 24px;
+			}
+		}
+	}
+}
+
+// 🌸 CARTOON FLOWERS
+.flower {
+	position: absolute;
+	z-index: 8;
+	width: 40px;
+	height: 60px;
+
+	.petal {
+		position: absolute;
+		width: 14px;
+		height: 14px;
+		border-radius: 50%;
+		top: 5px;
+		left: 50%;
+		transform-origin: center 20px;
+
+		&:nth-child(1) {
+			transform: translateX(-50%) rotate(0deg);
+		}
+
+		&:nth-child(2) {
+			transform: translateX(-50%) rotate(72deg);
+		}
+
+		&:nth-child(3) {
+			transform: translateX(-50%) rotate(144deg);
+		}
+
+		&:nth-child(4) {
+			transform: translateX(-50%) rotate(216deg);
+		}
+
+		&:nth-child(5) {
+			transform: translateX(-50%) rotate(288deg);
+		}
+	}
+
+	.center {
+		position: absolute;
+		width: 12px;
+		height: 12px;
+		background: #ffd700;
+		border-radius: 50%;
+		top: 11px;
+		left: 50%;
+		transform: translateX(-50%);
+
+		&::after {
+			content: '';
+			position: absolute;
+			width: 4px;
+			height: 4px;
+			background: #fff;
+			border-radius: 50%;
+			top: 2px;
+			left: 3px;
+		}
+	}
+
+	.stem {
+		position: absolute;
+		width: 2px;
+		height: 35px;
+		background: #5dbb3f;
+		bottom: 0;
+		left: 50%;
+		transform: translateX(-50%);
+		border-radius: 2px;
+
+		&::before {
+			content: '';
+			position: absolute;
+			width: 8px;
+			height: 5px;
+			background: #5dbb3f;
+			border-radius: 50%;
+			top: 12px;
+			left: 3px;
+		}
+	}
+
+	// Flower colors
+	&.flower-pink .petal {
+		background: #f4a7b9;
+	}
+
+	&.flower-lavender .petal {
+		background: #c9a0dc;
+	}
+
+	&.flower-yellow .petal {
+		background: #fff176;
+	}
+
+	// Individual flower positioning
+	&.flower-1 {
+		left: 25%;
+		top: 700px;
+	}
+
+	&.flower-2 {
+		left: 28%;
+		top: 720px;
+	}
+
+	&.flower-3 {
+		right: 30%;
+		top: 900px;
+	}
+
+	&.flower-4 {
+		left: 60%;
+		top: 1100px;
+	}
+
+	&.flower-5 {
+		left: 62%;
+		top: 1120px;
+	}
+
+	&.flower-6 {
+		left: 30%;
+		top: 1400px;
+	}
+
+	&.flower-7 {
+		right: 25%;
+		top: 1650px;
+	}
+
+	&.flower-8 {
+		right: 28%;
+		top: 1670px;
+	}
+
+	&.flower-9 {
+		left: 20%;
+		top: 1900px;
+	}
+
+	&.flower-10 {
+		left: 65%;
+		top: 2200px;
+	}
+
+	&.flower-11 {
+		left: 68%;
+		top: 2220px;
+	}
+
+	&.flower-12 {
+		left: 35%;
+		top: 2550px;
+	}
+}
+
+// 🪨 SMALL PEBBLES
+.pebble {
+	position: absolute;
+	background: linear-gradient(135deg, #d0d0d0 0%, #b0b0b0 50%, #909090 100%);
+	border: 2px solid #000;
+	border-radius: 50%;
+	z-index: 7;
+
+	&.pebble-1 {
+		width: 25px;
+		height: 18px;
+		left: 40%;
+		top: 850px;
+		border-radius: 50% 40%;
+	}
+
+	&.pebble-2 {
+		width: 20px;
+		height: 15px;
+		left: 58%;
+		top: 1150px;
+		border-radius: 45% 50%;
+	}
+
+	&.pebble-3 {
+		width: 22px;
+		height: 16px;
+		left: 35%;
+		top: 1550px;
+		border-radius: 48% 52%;
+	}
+
+	&.pebble-4 {
+		width: 18px;
+		height: 14px;
+		left: 37%;
+		top: 1570px;
+		border-radius: 50% 45%;
+	}
+
+	&.pebble-5 {
+		width: 24px;
+		height: 17px;
+		right: 38%;
+		top: 2050px;
+		border-radius: 52% 48%;
+	}
+
+	&.pebble-6 {
+		width: 21px;
+		height: 16px;
+		left: 48%;
+		top: 2450px;
+		border-radius: 50% 50%;
+	}
+}
+
+// 🎴 CAREER CONTENT WRAPPER
+.career-content {
+	position: relative;
+	z-index: 10;
+	padding-top: 0;
+}
+
+// 🌑 DARK GROUND BASE STRIP
+.ground-base {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 60px;
+	background: #3a8c1e;
+	z-index: 11;
+}
+
+// 🎬 RESPONSIVE ADJUSTMENTS
+@media (max-width: 768px) {
+	.tree {
+		transform: scale(0.7);
+	}
+
+	.mushroom {
+		transform: scale(0.8);
+	}
+
+	.flower {
+		transform: scale(0.85);
+	}
+
+	.background-hills {
+		.bg-hill {
+			&.bg-hill-1,
+			&.bg-hill-2,
+			&.bg-hill-3 {
+				width: 80%;
+				height: auto;
+				aspect-ratio: 1.4/1;
+			}
+		}
+	}
+}
+
+@media (max-width: 480px) {
+	.sky-section {
+		height: 200px;
+	}
+
+	.horizon-hills {
+		top: 180px;
+		height: 70px;
+
+		.hill {
+			&.hill-1,
+			&.hill-2,
+			&.hill-3 {
+				height: 80px;
+			}
+		}
+	}
+
+	.grass-field {
+		top: 250px;
+	}
+
+	.tree {
+		transform: scale(0.5);
+	}
+
+	.mushroom {
+		transform: scale(0.6);
+	}
+
+	.flower {
+		transform: scale(0.7);
+	}
+
+	.pebble {
+		transform: scale(0.8);
+	}
+}

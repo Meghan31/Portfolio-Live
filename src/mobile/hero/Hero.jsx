@@ -25,7 +25,7 @@ const Hero = () => {
 			// Complete animation in ~15 frames
 			const framesToComplete = 15;
 			const charsToReveal = Math.ceil(
-				(frameCount / framesToComplete) * targetText.length
+				(frameCount / framesToComplete) * targetText.length,
 			);
 
 			let newText = '';
@@ -115,8 +115,8 @@ const Hero = () => {
 			</div>
 			<div className="resume-download">
 				<a
-					href="/assets/Meghan_SDE_Resume.pdf"
-					download="Portfolio_Guy_Resume_Megha"
+					href="/assets/Megha_SWE_Resume.pdf"
+					download="Portfolio_Guy_Resume_Megha.pdf"
 				>
 					<button className="Mob-res">Download Resume</button>
 				</a>
