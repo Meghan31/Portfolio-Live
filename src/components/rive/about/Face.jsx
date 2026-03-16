@@ -4,7 +4,7 @@ import '../rive-details.scss';
 export default function Face() {
 	const { RiveComponent } = useRive(
 		{
-			src: '/assets/rive/home/facelined.riv',
+			src: '/assets/rive/home/newface2.riv',
 			stateMachines: 'face_draw',
 
 			autoplay: true,
@@ -12,7 +12,7 @@ export default function Face() {
 
 		{
 			shouldResizeCanvasToContainer: true,
-		}
+		},
 	);
 
 	return (

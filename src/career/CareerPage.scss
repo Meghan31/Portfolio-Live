@@ -205,189 +205,54 @@
 		pointer-events: none;
 	}
 }
-
-// 🌳 CARTOON TREES
-.tree {
+// 🌳 RIVE TREES — shared base
+.rive-tree-pos {
 	position: absolute;
-	z-index: 7;
+	width: 220px;
+	height: 220px;
+	z-index: 999;
+	cursor: pointer;
+	pointer-events: auto;
 
-	.trunk {
-		position: absolute;
-		background: linear-gradient(
-			to bottom,
-			#8b5e3c 0%,
-			#8b5e3c 70%,
-			#6b4226 70%,
-			#6b4226 100%
-		);
-		border: 3px solid #000;
-		border-radius: 5px;
+	// Rive canvas fills the container
+	canvas {
+		width: 100% !important;
+		height: 100% !important;
 	}
 
-	.canopy {
-		position: absolute;
-		background: #4caf50;
-		border: 3px solid #000;
-		border-radius: 50%;
-
-		&::before {
-			content: '';
-			position: absolute;
-			top: 15%;
-			left: 20%;
-			width: 40%;
-			height: 40%;
-			background: #6dd16d;
-			border-radius: 50%;
-		}
-	}
-
-	// Individual tree positioning and sizing
-	&.tree-1 {
+	&.rive-tree-pos-1 {
 		left: 15%;
-		top: 400px;
-
-		.trunk {
-			width: 40px;
-			height: 120px;
-			bottom: 0;
-			left: 50%;
-			transform: translateX(-50%);
-		}
-
-		.canopy {
-			width: 140px;
-			height: 130px;
-			bottom: 100px;
-			left: 50%;
-			transform: translateX(-50%);
-		}
+		top: 300px;
 	}
 
-	&.tree-2 {
+	&.rive-tree-pos-2 {
 		right: 10%;
-		top: 600px;
-
-		.trunk {
-			width: 30px;
-			height: 90px;
-			bottom: 0;
-			left: 50%;
-			transform: translateX(-50%);
-		}
-
-		.canopy {
-			width: 110px;
-			height: 105px;
-			bottom: 75px;
-			left: 50%;
-			transform: translateX(-50%);
-		}
+		top: 500px;
 	}
 
-	&.tree-3 {
+	&.rive-tree-pos-3 {
 		left: 70%;
-		top: 1000px;
-
-		.trunk {
-			width: 50px;
-			height: 140px;
-			bottom: 0;
-			left: 50%;
-			transform: translateX(-50%);
-		}
-
-		.canopy {
-			width: 160px;
-			height: 150px;
-			bottom: 120px;
-			left: 50%;
-			transform: translateX(-50%);
-		}
+		top: 900px;
 	}
 
-	&.tree-4 {
+	&.rive-tree-pos-4 {
 		left: 5%;
-		top: 1400px;
-
-		.trunk {
-			width: 35px;
-			height: 100px;
-			bottom: 0;
-			left: 50%;
-			transform: translateX(-50%);
-		}
-
-		.canopy {
-			width: 120px;
-			height: 115px;
-			bottom: 85px;
-			left: 50%;
-			transform: translateX(-50%);
-		}
+		top: 1300px;
 	}
 
-	&.tree-5 {
+	&.rive-tree-pos-5 {
 		right: 20%;
-		top: 1800px;
-
-		.trunk {
-			width: 45px;
-			height: 130px;
-			bottom: 0;
-			left: 50%;
-			transform: translateX(-50%);
-		}
-
-		.canopy {
-			width: 145px;
-			height: 140px;
-			bottom: 110px;
-			left: 50%;
-			transform: translateX(-50%);
-		}
+		top: 1700px;
 	}
 
-	&.tree-6 {
-		left: 80%;
-		top: 2200px;
-
-		.trunk {
-			width: 32px;
-			height: 95px;
-			bottom: 0;
-			left: 50%;
-			transform: translateX(-50%);
-		}
-
-		.canopy {
-			width: 115px;
-			height: 108px;
-			bottom: 80px;
-			left: 50%;
-			transform: translateX(-50%);
-		}
+	&.rive-tree-pos-6 {
+		left: 78%;
+		top: 2100px;
 	}
 
-	&.tree-7 {
+	&.rive-tree-pos-7 {
 		left: 25%;
-		top: 2500px;
-
-		.trunk {
-			width: 38px;
-			height: 110px;
-			bottom: 0;
-			left: 50%;
-			transform: translateX(-50%);
-		}
-
-		.canopy {
-			width: 130px;
-			height: 125px;
-			bottom: 95px;
-			left: 50%;
-			transform: translateX(-50%);
-		}
+		top: 2400px;
 	}
 }
 
@@ -422,10 +287,10 @@
 		border-radius: 50%;
 	}
 
-	// Individual mushroom positioning
+	// Individual mushroom positioning — pushed to border edges, away from the center path
 	&.mushroom-1 {
-		left: 45%;
-		top: 800px;
+		left: 7%;
+		top: 680px;
 
 		.stem {
 			width: 25px;
@@ -474,8 +339,8 @@
 	}
 
 	&.mushroom-2 {
-		left: 38%;
-		top: 1200px;
+		right: 6%;
+		top: 1080px;
 
 		.stem {
 			width: 18px;
@@ -517,8 +382,8 @@
 	}
 
 	&.mushroom-3 {
-		right: 35%;
-		top: 1600px;
+		left: 4%;
+		top: 1520px;
 
 		.stem {
 			width: 22px;
@@ -559,8 +424,8 @@
 	}
 
 	&.mushroom-4 {
-		left: 42%;
-		top: 2000px;
+		right: 4%;
+		top: 1980px;
 
 		.stem {
 			width: 20px;
@@ -594,8 +459,8 @@
 	}
 
 	&.mushroom-5 {
-		left: 55%;
-		top: 2400px;
+		left: 5%;
+		top: 2380px;
 
 		.stem {
 			width: 28px;
@@ -634,61 +499,163 @@
 			}
 		}
 	}
+
+	// Middle mushrooms — mid-field, not on the path
+	&.mushroom-6 {
+		left: 22%;
+		top: 1350px;
+
+		.stem {
+			width: 20px;
+			height: 33px;
+			bottom: 0;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+
+		.cap {
+			width: 42px;
+			height: 30px;
+			bottom: 27px;
+			left: 50%;
+			transform: translateX(-50%);
+			background: #e05c00; // orange variant
+
+			.dot-1 {
+				width: 7px;
+				height: 7px;
+				top: 7px;
+				left: 10px;
+			}
+
+			.dot-2 {
+				width: 6px;
+				height: 6px;
+				top: 9px;
+				right: 9px;
+			}
+		}
+
+		.shadow {
+			width: 30px;
+			height: 7px;
+			bottom: -4px;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+	}
+
+	&.mushroom-7 {
+		right: 20%;
+		top: 2100px;
+
+		.stem {
+			width: 24px;
+			height: 38px;
+			bottom: 0;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+
+		.cap {
+			width: 48px;
+			height: 34px;
+			bottom: 30px;
+			left: 50%;
+			transform: translateX(-50%);
+			background: #9b3ebf; // purple variant
+
+			.dot-1 {
+				width: 8px;
+				height: 8px;
+				top: 8px;
+				left: 11px;
+			}
+
+			.dot-2 {
+				width: 7px;
+				height: 7px;
+				top: 10px;
+				right: 10px;
+			}
+
+			.dot-3 {
+				width: 6px;
+				height: 6px;
+				bottom: 6px;
+				left: 22px;
+			}
+		}
+
+		.shadow {
+			width: 34px;
+			height: 8px;
+			bottom: -5px;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+	}
 }
 
 // 🌸 CARTOON FLOWERS
 .flower {
 	position: absolute;
 	z-index: 8;
-	width: 40px;
-	height: 60px;
+	width: 52px;
+	height: 76px;
 
+	// All petals start centered at the top of the flower,
+	// transform-origin at their bottom-center = the flower's single center point
 	.petal {
 		position: absolute;
-		width: 14px;
-		height: 14px;
+		width: 18px;
+		height: 22px;
 		border-radius: 50%;
-		top: 5px;
+		border: 2.5px solid #000;
+		top: 0;
 		left: 50%;
-		transform-origin: center 20px;
+		margin-left: -9px;
+		// origin = bottom-center of petal = meeting point of all petals
+		transform-origin: 50% 100%;
+		z-index: 1;
 
 		&:nth-child(1) {
-			transform: translateX(-50%) rotate(0deg);
+			transform: rotate(0deg);
 		}
-
 		&:nth-child(2) {
-			transform: translateX(-50%) rotate(72deg);
+			transform: rotate(72deg);
 		}
-
 		&:nth-child(3) {
-			transform: translateX(-50%) rotate(144deg);
+			transform: rotate(144deg);
 		}
-
 		&:nth-child(4) {
-			transform: translateX(-50%) rotate(216deg);
+			transform: rotate(216deg);
 		}
-
 		&:nth-child(5) {
-			transform: translateX(-50%) rotate(288deg);
+			transform: rotate(288deg);
 		}
 	}
 
+	// Center sits exactly at the convergence point of all petals
 	.center {
 		position: absolute;
-		width: 12px;
-		height: 12px;
+		width: 16px;
+		height: 16px;
 		background: #ffd700;
+		border: 2.5px solid #000;
 		border-radius: 50%;
-		top: 11px;
+		// petal-height = 22px, center sits at that point minus its own radius
+		top: calc(22px - 8px);
 		left: 50%;
 		transform: translateX(-50%);
+		z-index: 2;
 
 		&::after {
 			content: '';
 			position: absolute;
-			width: 4px;
-			height: 4px;
-			background: #fff;
+			width: 5px;
+			height: 5px;
+			background: rgba(255, 255, 255, 0.7);
 			border-radius: 50%;
 			top: 2px;
 			left: 3px;
@@ -697,98 +664,208 @@
 
 	.stem {
 		position: absolute;
-		width: 2px;
-		height: 35px;
-		background: #5dbb3f;
+		width: 4px;
+		height: 40px;
+		background: #4aad20;
+		border: 2px solid #000;
+		border-radius: 4px;
 		bottom: 0;
 		left: 50%;
 		transform: translateX(-50%);
-		border-radius: 2px;
 
+		// small leaf nub
 		&::before {
 			content: '';
 			position: absolute;
-			width: 8px;
-			height: 5px;
-			background: #5dbb3f;
-			border-radius: 50%;
-			top: 12px;
+			width: 12px;
+			height: 8px;
+			background: #4aad20;
+			border: 2px solid #000;
+			border-radius: 50% 50% 0 50%;
+			top: 10px;
 			left: 3px;
 		}
 	}
 
 	// Flower colors
 	&.flower-pink .petal {
-		background: #f4a7b9;
+		background: #f48fb1;
 	}
-
 	&.flower-lavender .petal {
-		background: #c9a0dc;
+		background: #ce93d8;
 	}
-
 	&.flower-yellow .petal {
 		background: #fff176;
 	}
 
-	// Individual flower positioning
+	// Individual flower positions (unchanged)
 	&.flower-1 {
 		left: 25%;
 		top: 700px;
 	}
-
 	&.flower-2 {
 		left: 28%;
 		top: 720px;
 	}
-
 	&.flower-3 {
 		right: 30%;
 		top: 900px;
 	}
-
 	&.flower-4 {
 		left: 60%;
 		top: 1100px;
 	}
-
 	&.flower-5 {
 		left: 62%;
 		top: 1120px;
 	}
-
 	&.flower-6 {
 		left: 30%;
 		top: 1400px;
 	}
-
 	&.flower-7 {
 		right: 25%;
 		top: 1650px;
 	}
-
 	&.flower-8 {
 		right: 28%;
 		top: 1670px;
 	}
-
 	&.flower-9 {
 		left: 20%;
 		top: 1900px;
 	}
-
 	&.flower-10 {
 		left: 65%;
 		top: 2200px;
 	}
-
 	&.flower-11 {
 		left: 68%;
 		top: 2220px;
 	}
-
 	&.flower-12 {
 		left: 35%;
 		top: 2550px;
+	}
+}
+
+// 🌿 SMALL GRASS TUFTS
+.grass-tuft {
+	position: absolute;
+	z-index: 7;
+	width: 28px;
+	height: 28px;
+
+	.blade {
+		position: absolute;
+		width: 5px;
+		background: #3aab16;
+		border: 1.5px solid #1e7a08;
+		border-radius: 40% 40% 10% 10% / 50% 50% 10% 10%;
+		bottom: 0;
+		transform-origin: bottom center;
+	}
+
+	// Three-blade cluster
+	.blade-l {
+		height: 18px;
+		left: 4px;
+		transform: rotate(-22deg);
+		background: #4cbd1e;
+	}
+	.blade-c {
+		height: 24px;
+		left: 11px;
+		transform: rotate(0deg);
+		background: #3aab16;
+	}
+	.blade-r {
+		height: 16px;
+		left: 18px;
+		transform: rotate(20deg);
+		background: #4cbd1e;
+	}
+
+	// Scattered positions all across the landscape
+	&.gt-1 {
+		left: 12%;
+		top: 580px;
+	}
+	&.gt-2 {
+		right: 14%;
+		top: 640px;
+	}
+	&.gt-3 {
+		left: 32%;
+		top: 780px;
+	}
+	&.gt-4 {
+		right: 22%;
+		top: 820px;
+	}
+	&.gt-5 {
+		left: 8%;
+		top: 970px;
+	}
+	&.gt-6 {
+		right: 9%;
+		top: 1030px;
+	}
+	&.gt-7 {
+		left: 40%;
+		top: 1160px;
+	}
+	&.gt-8 {
+		right: 32%;
+		top: 1250px;
+	}
+	&.gt-9 {
+		left: 18%;
+		top: 1480px;
+	}
+	&.gt-10 {
+		right: 15%;
+		top: 1560px;
+	}
+	&.gt-11 {
+		left: 55%;
+		top: 1720px;
+	}
+	&.gt-12 {
+		left: 10%;
+		top: 1840px;
+	}
+	&.gt-13 {
+		right: 28%;
+		top: 1930px;
+	}
+	&.gt-14 {
+		left: 35%;
+		top: 2080px;
+	}
+	&.gt-15 {
+		right: 7%;
+		top: 2180px;
+	}
+	&.gt-16 {
+		left: 14%;
+		top: 2300px;
+	}
+	&.gt-17 {
+		right: 18%;
+		top: 2420px;
+	}
+	&.gt-18 {
+		left: 48%;
+		top: 2500px;
+	}
+	&.gt-19 {
+		right: 40%;
+		top: 2600px;
+	}
+	&.gt-20 {
+		left: 25%;
+		top: 2650px;
 	}
 }
 

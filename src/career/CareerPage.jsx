@@ -7,8 +7,8 @@ export const CareerPage = () => {
 			{/* Sky Section */}
 			<div className="sky-section"></div>
 			<div className="career-content">
-					<Career />
-				</div>
+				<Career />
+			</div>
 
 			{/* Rolling Hills Horizon */}
 			<div className="horizon-hills">
@@ -46,35 +46,14 @@ export const CareerPage = () => {
 					</svg>
 				</div>
 
-				{/* Cartoon Trees */}
-				<div className="tree tree-1">
-					<div className="trunk"></div>
-					<div className="canopy"></div>
-				</div>
-				<div className="tree tree-2">
-					<div className="trunk"></div>
-					<div className="canopy"></div>
-				</div>
-				<div className="tree tree-3">
-					<div className="trunk"></div>
-					<div className="canopy"></div>
-				</div>
-				<div className="tree tree-4">
-					<div className="trunk"></div>
-					<div className="canopy"></div>
-				</div>
-				<div className="tree tree-5">
-					<div className="trunk"></div>
-					<div className="canopy"></div>
-				</div>
-				<div className="tree tree-6">
-					<div className="trunk"></div>
-					<div className="canopy"></div>
-				</div>
-				<div className="tree tree-7">
-					<div className="trunk"></div>
-					<div className="canopy"></div>
-				</div>
+				{/* Rive Trees */}
+				{/* <Tree1 className="rive-tree-pos rive-tree-pos-1" />
+				<Tree1 className="rive-tree-pos rive-tree-pos-2" />
+				<Tree1 className="rive-tree-pos rive-tree-pos-3" />
+				<Tree1 className="rive-tree-pos rive-tree-pos-4" />
+				<Tree1 className="rive-tree-pos rive-tree-pos-5" />
+				<Tree1 className="rive-tree-pos rive-tree-pos-6" />
+				<Tree1 className="rive-tree-pos rive-tree-pos-7" /> */}
 
 				{/* Cartoon Mushrooms */}
 				<div className="mushroom mushroom-1">
@@ -117,6 +96,35 @@ export const CareerPage = () => {
 						<div className="dot dot-3"></div>
 					</div>
 				</div>
+				{/* Middle mushrooms */}
+				<div className="mushroom mushroom-6">
+					<div className="stem"></div>
+					<div className="cap">
+						<div className="dot dot-1"></div>
+						<div className="dot dot-2"></div>
+					</div>
+					<div className="shadow"></div>
+				</div>
+				<div className="mushroom mushroom-7">
+					<div className="stem"></div>
+					<div className="cap">
+						<div className="dot dot-1"></div>
+						<div className="dot dot-2"></div>
+						<div className="dot dot-3"></div>
+					</div>
+					<div className="shadow"></div>
+				</div>
+
+				{/* Small Grass Tufts */}
+				{[
+					1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+				].map((n) => (
+					<div key={n} className={`grass-tuft gt-${n}`}>
+						<div className="blade blade-l"></div>
+						<div className="blade blade-c"></div>
+						<div className="blade blade-r"></div>
+					</div>
+				))}
 
 				{/* Cartoon Flowers */}
 				<div className="flower flower-pink flower-1">
@@ -237,7 +245,6 @@ export const CareerPage = () => {
 				<div className="pebble pebble-6"></div>
 
 				{/* Career Component */}
-				
 
 				{/* Dark Ground Base Strip */}
 				<div className="ground-base"></div>
