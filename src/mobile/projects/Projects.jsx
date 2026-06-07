@@ -8,9 +8,9 @@ const Projects = () => {
 		<div>
 			<UbuntuMob />
 			<br />
-			<MacMob />
-			<br />
 			<WindowMob />
+			<br />
+			<MacMob />
 		</div>
 	);
 };

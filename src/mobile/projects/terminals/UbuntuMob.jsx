@@ -65,7 +65,7 @@ const UbuntuMob = () => {
 						className="project-name-ubuntu-mob"
 						style={{ display: 'flex', flexDirection: 'row' }}
 					>
-						<p className="title-ubuntu-mob">CodeSketch: ~</p>
+						<p className="title-ubuntu-mob">CreatorBoost: ~</p>
 						<img
 							src="assets/svg/mac-link.svg"
 							alt="GitHub"
@@ -74,11 +74,7 @@ const UbuntuMob = () => {
 								height: '22px',
 								width: '22px',
 								color: 'whitesmoke',
-								cursor: 'pointer',
 							}}
-							onClick={() =>
-								window.open('https://github.com/Meghan31/Code-Sketch')
-							}
 						/>
 					</div>
 					<div
@@ -135,16 +131,10 @@ const UbuntuMob = () => {
 					</div>
 				</div>
 
-				{/*
-CodeSketch | Node.js, Socket.IO, Redis, Docker, Cloud Infrastructure, AWS, Jest, CI/CD, React
-• Architected enterprise-grade real-time collaboration platform with Redis-backed distributed architecture and horizontal auto-scaling, supporting 1000+ concurrent WebSocket connections with <100ms P99 latency and 99%+ uptime in production
-• Established end-to-end DevOps excellence through containerized Docker deployments, automated CI/CD pipelines via GitHub Actions, comprehensive observability using Prometheus/Grafana, and 85% test coverage, enabling zero-downtime releases 
- */}
-
 				<div className="description-ubuntu-mob">
 					<p>meghan31@ubuntu</p>
 					<p>:</p>
-					<p>~/CodeSketch</p>
+					<p>~/CreatorBoost</p>
 					<p>$</p>
 					<p
 						style={{
@@ -155,49 +145,22 @@ CodeSketch | Node.js, Socket.IO, Redis, Docker, Cloud Infrastructure, AWS, Jest,
 					</p>
 				</div>
 				<div className="points-ubuntu-mob">
-					{/* <p>
-						<p style={{ color: '#4E9A06' }}>PROJECT</p>: Built an innovative
-						real-time, collaborative code editor and drawing board, enabling
-						users to seamlessly collaborate on both code and visuals in a shared
-						environment, improving workflow and creativity.
-					</p> */}
 					<p>
-						• Architected enterprise-grade real-time collaboration platform with
-						Redis-backed distributed architecture and horizontal auto-scaling,
-						supporting 1000+ concurrent WebSocket connections with &lt;100ms P99
-						latency and 99%+ uptime in production
+						• CreatorBoost is an advanced analytics platform that provides
+						real-time dashboards and internal tooling for comprehensive workflow
+						management.
 					</p>
 
 					<br />
-					{/* <p>
-						<p style={{ color: '#4E9A06' }}>FEATURES</p>: Leveraged WebSockets
-						for efficient, instant updates between users, and implemented secure
-						session management protocols to ensure data integrity and smooth,
-						uninterrupted collaboration across various platforms.
-					</p> */}
 					<p>
-						• Established end-to-end DevOps excellence through containerized
-						Docker deployments, automated CI/CD pipelines via GitHub Actions,
-						comprehensive observability using Prometheus/Grafana, and 85% test
-						coverage, enabling zero-downtime releases
+						• It effortlessly processes large volumes of information, delivering
+						instant insights and robust tracking capabilities to end users.
 					</p>
-				</div>
-				<div className="description-ubuntu-mob">
-					<p>meghan31@ubuntu</p>
-					<p>:</p>
-					<p>~/CodeSketch</p>
-					<p>$</p>
-					<p
-						style={{
-							color: 'whitesmoke',
-						}}
-					>
-						&nbsp;cat tech-stack.txt
-					</p>
-				</div>
-				<div className="tech-ubuntu-mob">
+					<br />
 					<p>
-						Technologies Used: Node.js, Socket.IO, Redis, Docker, Cloud Infrastructure, AWS, Jest, CI/CD, React, Express, WebSockets, JavaScript, Collaborative Environment, Git/GitHub, Jest.
+						• Built with high-performance event pipelines, the system ensures
+						seamless, low-latency communication and deep observability, allowing
+						rapid decision-making across the platform.
 					</p>
 				</div>
 			</div>

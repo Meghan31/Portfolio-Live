@@ -76,50 +76,16 @@ const Windows2 = () => {
 
 						<div className="output-section">
 							<p className="project-point">
-								• Built a high-performance, **distributed API rate limiting
-								service** using Spring Boot and Redis to manage request quotas
-								and prevent API abuse. :contentReference
-								{/* [oaicite:1]{index=1} */}
+								• This powerful smart rate-limiting service actively protects
+								systems by managing user traffic and preventing system overload
+								or abuse.
 							</p>
 							<p className="project-point">
-								• Implemented a **Token Bucket algorithm** with distributed
-								state via Redis, configurable limits per user, atomic
-								refill/consume, and resilient, production-ready handling of high
-								throughput traffic. :contentReference
-								{/* [oaicite:2]{index=2} */}
-							</p>
-						</div>
-
-						<div
-							className="command-prompt"
-							style={{
-								display: 'flex',
-								flexDirection: 'row',
-								alignItems: 'center',
-							}}
-						>
-							<p className="ps-path">
-								PS
-								C:\Users\Meghan31\Desktop\Smart-API-Rate-Limiter-with-Adaptive-Scaling&gt;
-							</p>
-							<span>&nbsp;&nbsp;&nbsp; </span>
-							<p className="ps-command" style={{ paddingBottom: '5px' }}>
-								get-tech -list
-							</p>
-						</div>
-
-						<div className="tech-section">
-							<p>
-								<span
-									className="ps-output-tag"
-									style={{ fontFamily: 'Courier New' }}
-								>
-									[TECHNOLOGIES]
-								</span>{' '}
-								Java, Spring Boot, Redis, Docker, Maven, JUnit, Git/GitHub, REST
-								APIs, YAML Configuration :contentReference
-								{/* [oaicite:3]
-								{(index = 3)} */}
+								• It intelligently monitors active connections, enforces
+								customized limits for different users, and smoothly adapts to
+								varying demand. Featuring a highly durable structural design,
+								the service dependably handles massive surges in traffic while
+								preserving fast, responsive service across the board.
 							</p>
 						</div>
 					</div>

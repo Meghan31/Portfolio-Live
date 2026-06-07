@@ -27,11 +27,12 @@
 	}
 	.buttons {
 		// background-color: aqua;
-		width: 75%;
+		width: max-content;
 		display: flex;
 		align-items: center;
-		justify-content: space-around;
-		gap: 1rem;
+		justify-content: center;
+		gap: 0.5rem;
+		margin-top: 0.3rem;
 		margin-left: auto;
 		margin-right: auto;
 	}

@@ -29,7 +29,7 @@ const MacMob = () => {
 								marginRight: '8px',
 							}}
 						/>
-						<p className="title-mac-mob">Nostalgia Manager — -zsh — 80×24</p>
+						<p className="title-mac-mob">MarketPulse — -zsh — 80×24</p>
 					</div>
 					<div className="icons-mac-mob">
 						<img
@@ -38,13 +38,7 @@ const MacMob = () => {
 							style={{
 								height: '18px',
 								width: '18px',
-								cursor: 'pointer',
 							}}
-							onClick={() =>
-								window.open(
-									'https://github.com/Meghan31/nostalgia-copy-paste-extension'
-								)
-							}
 						/>
 					</div>
 				</div>
@@ -102,7 +96,7 @@ const MacMob = () => {
 							fontFamily: 'monospace',
 						}}
 					>
-						~/projects/nostalgia-manager
+						~/projects/marketpulse
 					</p>
 					<p
 						className="symbol-mac-mob"
@@ -126,68 +120,21 @@ const MacMob = () => {
 				</div>
 				<div className="points-mac-mob">
 					<p>
-						• Developed a browser extension to save and manage copied texts,
-						addressing the clipboard limitations on macOS by allowing users to
-						store and easily retrieve previously copied content, improving
-						workflow efficiency.
+						• MarketPulse is a comprehensive resale marketplace platform
+						designed to effortlessly connect buyers and sellers with a robust
+						and reliable system.
 					</p>
 					<br />
 					<p>
-						• Implemented a user-friendly interface with a responsive design,
-						enabling seamless note management and quick access to saved texts,
-						while ensuring data persistence using Chrome&apos;s local storage
-						for a smooth, reliable experience.
+						• The platform tracks every user action smoothly and highlights
+						trending items in real-time, providing detailed insights into
+						dynamic market movements.
 					</p>
-				</div>
-				<div className="description-mac-mob">
-					<p
-						className="user-mac-mob"
-						style={{
-							fontFamily: 'monospace',
-						}}
-					>
-						meghan31@MacBook-Pro
-					</p>
-					<p
-						className="symbol-mac-mob"
-						style={{
-							fontFamily: 'monospace',
-						}}
-					>
-						:
-					</p>
-					<p
-						className="path-mac-mob"
-						style={{
-							fontFamily: 'monospace',
-						}}
-					>
-						~/projects/nostalgia-manager
-					</p>
-					<p
-						className="symbol-mac-mob"
-						style={{
-							fontFamily: 'monospace',
-						}}
-					>
-						$
-					</p>
-				</div>
-				<div className="command-mac-mob">
-					<p
-						className="command-text-mob"
-						style={{
-							fontFamily: 'monospace',
-							color: 'grey',
-						}}
-					>
-						cat tech-stack.txt
-					</p>
-				</div>
-				<div className="tech-mac-mob">
+					<br />
 					<p>
-						Technologies: React, TypeScript, SCSS, Chrome Storage API,
-						Git/GitHub, Fresco, Cypress
+						• It includes highly responsive search functionality and is
+						continuously monitored to guarantee uninterrupted service and rapid
+						query resolution for all users.
 					</p>
 				</div>
 			</div>

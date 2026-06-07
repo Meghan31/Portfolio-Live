@@ -13,7 +13,7 @@ const Windows = () => {
 								alt="PowerShell Logo"
 								className="powershell-icon"
 							/>
-							<p className="title-windows">Windows PowerShell - Mind-Bloom</p>
+							<p className="title-windows">Windows PowerShell - CodeSketch</p>
 						</div>
 						<div className="window-controls">
 							<div className="control-button minimize">
@@ -61,7 +61,7 @@ const Windows = () => {
 							}}
 						>
 							<p className="ps-path">
-								PS C:\Users\Meghan31\Desktop\Mind-Bloom&gt;
+								PS C:\Users\Meghan31\Desktop\CodeSketch&gt;
 							</p>
 							<span>&nbsp;&nbsp;&nbsp; </span>
 							<p
@@ -76,52 +76,18 @@ const Windows = () => {
 
 						<div className="output-section">
 							<p className="project-point">
-								• Architected and implemented a full-stack mental wellness
-								application featuring mood tracking, journaling, and
-								personalized affirmations, resulting in a 45% increase in user
-								engagement and daily journaling consistency
+								• CodeSketch is a high-performance, real-time collaborative
+								platform designed for seamless teamwork.
 							</p>
 							<p className="project-point">
-								• Developed a secure authentication system with JWT and
-								role-based access control, integrated with PostgreSQL database
-								using Prisma ORM, and deployed on Google Cloud Platform for
-								scalability and 99.9% uptime reliability
+								• It supports thousands of concurrent users in the same space,
+								empowering them to interact and collaborate with exceptionally
+								low delays.
 							</p>
-						</div>
-
-						<div
-							className="command-prompt"
-							style={{
-								display: 'flex',
-								flexDirection: 'row',
-								alignItems: 'center',
-							}}
-						>
-							<p className="ps-path">
-								PS C:\Users\Meghan31\Desktop\Mind-Bloom&gt;
-							</p>
-							<span>&nbsp;&nbsp;&nbsp; </span>
-							<p
-								className="ps-command"
-								style={{
-									paddingBottom: '5px',
-								}}
-							>
-								get-tech -list
-							</p>
-						</div>
-
-						<div className="tech-section">
-							<p>
-								<span
-									className="ps-output-tag"
-									style={{
-										fontFamily: 'Courier New',
-									}}
-								>
-									[TECHNOLOGIES]
-								</span>{' '}
-								TypeScript, Docker, React, Express, PostgreSQL, JWT, Prisma, GCP, TailwindCSS
+							<p className="project-point">
+								• The system features a robust, secure infrastructure for
+								reliable session management and highly consistent document
+								storage, ensuring uninterrupted operation.
 							</p>
 						</div>
 					</div>

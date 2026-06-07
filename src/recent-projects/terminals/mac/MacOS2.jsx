@@ -85,44 +85,17 @@ const MacOS2 = () => {
 
 						<div className="points-mac">
 							<p>
-								• TimeSling is a simple macOS menu bar **timer app** — drop time
-								far into the future with a click, stack unlimited timers, and
-								receive notifications that work even in fullscreen.
-								{/* :contentReference[oaicite:1]{(index = 1)} */}
+								• TimeSling is a simple macOS menu bar timer app — easily
+								schedule time far into the future with a click, stack unlimited
+								timers, and receive notifications that work even in fullscreen.
 							</p>
 							<br />
 							<p>
-								• Includes quick presets, custom drag-to-set timers, timer
-								naming, and a sleek UX focused on minimal friction.
-								{/* :contentReference[oaicite:2]{(index = 2)} */}
+								• Includes quick presets, custom drag-to-set functionalities,
+								timer naming, and a sleek user interface focused on minimal
+								friction.
 							</p>
 						</div>
-
-						{/* TECH STACK */}
-						<div className="terminal-command">
-							<div className="description-mac">
-								<p className="user-mac" style={{ fontFamily: 'monospace' }}>
-									meghan31@MacBook-Pro
-								</p>
-								<p className="symbol-mac">:</p>
-								<p className="path-mac" style={{ fontFamily: 'monospace' }}>
-									~/projects/TimeSling
-								</p>
-								<p className="symbol-mac">$</p>
-							</div>
-							<div className="command-mac">
-								<p className="command-text" style={{ fontFamily: 'monospace' }}>
-									cat tech-stack.txt
-								</p>
-							</div>
-						</div>
-					</div>
-
-					<div className="tech-mac">
-						<p>
-							Technologies: Swift, Xcode, macOS AppKit/UIKit, Menu Bar,
-							Notifications API, Git/GitHub
-						</p>
 					</div>
 				</div>
 			</Draggable>

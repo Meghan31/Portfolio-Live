@@ -124,7 +124,7 @@ const WindowMob = () => {
 								width: '16px',
 							}}
 						/>
-						<p className="title-windows-mob">Windows PowerShell - Mind-Bloom</p>
+						<p className="title-windows-mob">Windows PowerShell - CodeSketch</p>
 					</div>
 					<div className="dots-windows-mob">
 						<img
@@ -162,34 +162,26 @@ const WindowMob = () => {
 				</div>
 				<div className="command-prompt-mob">
 					<p className="ps-path-mob">
-						PS C:\Users\Meghan31\Desktop\Mind-Bloom&gt;
+						PS C:\Users\Meghan31\Desktop\CodeSketch&gt;
 					</p>
 					<p className="ps-command-mob">get-project -info</p>
 				</div>
 				<div className="points-windows-mob">
 					<p>
-						• Architected and implemented a full-stack mental wellness
-						application featuring mood tracking, journaling, and personalized
-						affirmations, resulting in a 45% increase in user engagement and
-						daily journaling consistency
+						• CodeSketch is a high-performance, real-time collaborative platform
+						designed for seamless teamwork.
 					</p>
 					<br />
 					<p>
-						• Developed a secure authentication system with JWT and role-based
-						access control, integrated with PostgreSQL database using Prisma
-						ORM, and deployed on Google Cloud Platform for scalability and 99.9%
-						uptime reliability
+						• It supports thousands of concurrent users in the same space,
+						empowering them to interact and collaborate with exceptionally low
+						delays.
 					</p>
-				</div>
-				<div className="command-prompt-mob">
-					<p className="ps-path-mob">
-						PS C:\Users\Meghan31\Desktop\Mind-Bloom&gt;
-					</p>
-					<p className="ps-command-mob">get-tech -list</p>
-				</div>
-				<div className="tech-windows-mob">
+					<br />
 					<p>
-						<p className="ps-output-tag-mob">[TECHNOLOGIES]</p> TypeScript, Docker, React, Express, PostgreSQL, JWT, Prisma, GCP, TailwindCSS
+						• The system features a robust, secure infrastructure for reliable
+						session management and highly consistent document storage, ensuring
+						uninterrupted operation.
 					</p>
 				</div>
 			</div>

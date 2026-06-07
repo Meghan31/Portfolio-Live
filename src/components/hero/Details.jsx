@@ -24,7 +24,7 @@ const Details = () => {
 			<div className="buttons">
 				<GitHub />
 				<Linkedin />
-				<Resume />
+				{/* <Resume /> */}
 				{/* <div
 					style={{
 						height: '70px',

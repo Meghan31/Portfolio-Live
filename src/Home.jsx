@@ -32,14 +32,8 @@ const Home = () => {
 				<section id="about" style={{ height: '100vh' }}>
 					<About />
 				</section>
-				<section id="career" style={{}}>
+				{/* <section id="career" style={{}}>
 					<CareerPage />
-				</section>
-				<section id="recents" style={{ marginBottom: '100px' }}>
-					<RecentProjects />
-				</section>
-				{/* <section id="ProjectSection" style={{ height: '100vh' }}>
-					<ProjectSection />
 				</section> */}
 				<section
 					id="projects"
@@ -50,6 +44,13 @@ const Home = () => {
 				>
 					<Projects />
 				</section>
+				<section id="recents" style={{ marginBottom: '100px' }}>
+					<RecentProjects />
+				</section>
+				{/* <section id="ProjectSection" style={{ height: '100vh' }}>
+					<ProjectSection />
+				</section> */}
+				
 
 				<section id="skills" style={{}}>
 					<Skills />

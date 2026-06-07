@@ -18,18 +18,13 @@ const MacOS = () => {
 								alt="Logo"
 								className="mac-icon"
 							/>
-							<p className="title-mac">Nostalgia Manager — -zsh — 150×20</p>
+							<p className="title-mac">MarketPulse — -zsh — 150×20</p>
 						</div>
 						<div className="icons-mac">
 							<img
 								src="assets/svg/mac-link.svg"
 								alt="GitHub Link"
 								className="github-icon"
-								onClick={() =>
-									window.open(
-										'https://github.com/Meghan31/nostalgia-copy-paste-extension/blob/main/README.md'
-									)
-								}
 							/>
 						</div>
 					</div>
@@ -89,7 +84,7 @@ const MacOS = () => {
 										fontFamily: 'monospace',
 									}}
 								>
-									~/projects/nostalgia-manager
+									~/projects/marketpulse
 								</p>
 								<p
 									className="symbol-mac"
@@ -115,73 +110,23 @@ const MacOS = () => {
 						</div>
 						<div className="points-mac">
 							<p>
-								• Developed a browser extension to save and manage copied texts,
-								addressing the clipboard limitations on macOS by allowing users
-								to store and easily retrieve previously copied content,
-								improving workflow efficiency.
+								• MarketPulse is a comprehensive resale marketplace platform
+								designed to effortlessly connect buyers and sellers with a
+								robust and reliable system.
 							</p>
 							<br />
 							<p>
-								• Implemented a user-friendly interface with a responsive
-								design, enabling seamless note management and quick access to
-								saved texts, while ensuring data persistence using Chrome&apos;s
-								local storage for a smooth, reliable experience.
+								• The platform tracks every user action smoothly and highlights
+								trending items in real-time, providing detailed insights into
+								dynamic market movements.
+							</p>
+							<br />
+							<p>
+								• It includes highly responsive search functionality and is
+								continuously monitored to guarantee uninterrupted service and
+								rapid query resolution for all users.
 							</p>
 						</div>
-						<div className="terminal-command">
-							<div className="description-mac">
-								<p
-									className="user-mac"
-									style={{
-										fontFamily: 'monospace',
-									}}
-								>
-									meghan31@MacBook-Pro
-								</p>
-								<p
-									className="symbol-mac"
-									style={{
-										fontFamily: 'monospace',
-									}}
-								>
-									:
-								</p>
-								<p
-									className="path-mac"
-									style={{
-										fontFamily: 'monospace',
-									}}
-								>
-									~/projects/nostalgia-manager
-								</p>
-								<p
-									className="symbol-mac"
-									style={{
-										fontFamily: 'monospace',
-									}}
-								>
-									$
-								</p>
-							</div>
-							<span>&nbsp;&nbsp;&nbsp; </span>
-							<div className="command-mac">
-								<p
-									className="command-text"
-									style={{
-										fontFamily: 'monospace',
-										paddingTop: '3px',
-									}}
-								>
-									cat tech-stack.txt
-								</p>
-							</div>
-						</div>
-					</div>
-					<div className="tech-mac">
-						<p>
-							Technologies: React, TypeScript, SCSS, Chrome Storage API,
-							Git/GitHub, Fresco, Cypress
-						</p>
 					</div>
 				</div>
 			</Draggable>
