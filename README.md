@@ -36,7 +36,7 @@ Feel free to reach out with opportunities, feedback, or collaboration ideas:
 
 ## 📄 License
 
-Copyright © 2025 Meghasrivardhan Pulakhandam. All Rights Reserved.
+Copyright © 2026 Meghasrivardhan Pulakhandam. All Rights Reserved.
 
 ---
 
