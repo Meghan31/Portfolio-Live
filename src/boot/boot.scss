@@ -1,0 +1,685 @@
+/* ------------------------------------------------------------------ *
+ *  BootScreen — retro workstation boot overlay
+ *  Palette morphs across three shells via CSS custom properties:
+ *    .boot--ps      Windows PowerShell blue
+ *    .boot--ubuntu  Ubuntu aubergine
+ *    .boot--mac     macOS Terminal black
+ * ------------------------------------------------------------------ */
+
+$mono: 'SFMono-Regular', 'SF Mono', 'Menlo', 'Monaco', 'Consolas',
+	'Ubuntu Mono', 'Liberation Mono', 'Courier New', monospace;
+$exit-ms: 520ms;
+
+.boot-root {
+	position: fixed;
+	inset: 0;
+	z-index: 99999;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 24px;
+	background: #06060a;
+	overflow: hidden;
+	opacity: 1;
+	transition: opacity $exit-ms ease;
+
+	/* ---- stage palettes ---- */
+	--boot-bg: #012456;
+	--boot-accent: #f2d94e;
+	--boot-accent-soft: rgba(242, 217, 78, 0.28);
+
+	/* beat the global `* { font-family: 'hw_3d' }` from App.scss */
+	&,
+	& * {
+		font-family: $mono;
+		font-variant-ligatures: none;
+	}
+
+	&.boot--ubuntu {
+		--boot-bg: #300a24;
+		--boot-accent: #8ae234;
+		--boot-accent-soft: rgba(138, 226, 52, 0.26);
+	}
+
+	&.boot--mac {
+		--boot-bg: #000000;
+		--boot-accent: #36c346;
+		--boot-accent-soft: rgba(54, 195, 70, 0.26);
+	}
+
+	&.is-exiting {
+		opacity: 0;
+		pointer-events: none;
+
+		.boot-window {
+			transform: translateY(-10px) scale(1.015);
+		}
+		.boot-post,
+		.boot-hint {
+			opacity: 0;
+		}
+	}
+}
+
+/* ---------------------------- CRT overlay ---------------------------- */
+
+.boot-vignette {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	z-index: 4;
+	background: radial-gradient(
+		ellipse at center,
+		transparent 42%,
+		rgba(0, 0, 0, 0.55) 100%
+	);
+
+	&::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: repeating-linear-gradient(
+			to bottom,
+			rgba(255, 255, 255, 0.028) 0 1px,
+			transparent 1px 3px
+		);
+		animation: boot-flicker 7s steps(1) infinite;
+	}
+
+	&::after {
+		content: '';
+		position: absolute;
+		left: 0;
+		right: 0;
+		height: 36%;
+		background: linear-gradient(
+			to bottom,
+			transparent,
+			rgba(255, 255, 255, 0.03),
+			transparent
+		);
+		animation: boot-sweep 7.5s linear infinite;
+	}
+}
+
+/* ---------------------------- layout ---------------------------- */
+
+.boot-stack {
+	position: relative;
+	z-index: 2;
+	width: min(940px, 92vw);
+}
+
+.boot-post {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 12px;
+	padding-left: 2px;
+	font-size: 11px;
+	letter-spacing: 0.06em;
+	color: #565b68;
+	opacity: 0;
+	animation: boot-fade-in 0.5s ease 0.12s forwards;
+	transition: opacity 0.3s ease;
+}
+
+.boot-post-sep {
+	opacity: 0.5;
+}
+
+/* ---------------------------- window ---------------------------- */
+
+.boot-window {
+	position: relative;
+	border-radius: 10px;
+	overflow: hidden;
+	background: var(--boot-bg);
+	border: 1px solid rgba(255, 255, 255, 0.09);
+	box-shadow: 0 24px 70px rgba(0, 0, 0, 0.65),
+		0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+	transform-origin: center;
+	transition: background-color 0.5s ease, transform $exit-ms
+		cubic-bezier(0.4, 0, 0.2, 1);
+	animation: boot-crt-on 0.46s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ---------------------------- title bar ---------------------------- */
+
+.boot-titlebar {
+	position: relative;
+	height: 40px;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+	overflow: hidden;
+}
+
+.boot-chrome {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 12px;
+	opacity: 0;
+	transition: opacity 0.34s ease;
+
+	&.is-active {
+		opacity: 1;
+	}
+
+	&--ps {
+		background: #0c2b5b;
+	}
+	&--ubuntu {
+		background: #3d3d3d;
+	}
+	&--mac {
+		background: linear-gradient(to bottom, #3a3a3a, #2a2a2a);
+	}
+}
+
+.boot-chrome-left,
+.boot-chrome-right {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	min-width: 74px;
+}
+
+.boot-chrome-right {
+	justify-content: flex-end;
+}
+
+.boot-chrome-title {
+	font-size: 12.5px;
+	color: #d8d8d8;
+	letter-spacing: 0.2px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 62%;
+
+	&.is-centered {
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%);
+		max-width: calc(100% - 190px);
+	}
+}
+
+.boot-glyph {
+	fill: none;
+	stroke: currentColor;
+	stroke-width: 1.1;
+	stroke-linecap: round;
+}
+
+.boot-ps-mark {
+	display: inline-flex;
+	align-items: center;
+	font-size: 10.5px;
+	color: #7fd3ff;
+	border: 1px solid rgba(127, 211, 255, 0.38);
+	border-radius: 3px;
+	padding: 1px 4px;
+	margin-right: 4px;
+}
+
+.boot-winbtn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 24px;
+	height: 22px;
+	color: rgba(255, 255, 255, 0.7);
+
+	&.is-close {
+		color: rgba(255, 255, 255, 0.88);
+	}
+}
+
+.boot-ub-tab {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 22px;
+	height: 22px;
+	border-radius: 4px;
+	background: rgba(255, 255, 255, 0.1);
+	color: #dddddd;
+}
+
+.boot-ubbtn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.13);
+	color: #eeeeee;
+}
+
+.boot-mac-dots {
+	gap: 8px;
+
+	.boot-dot {
+		width: 12px;
+		height: 12px;
+		border-radius: 50%;
+
+		&.is-red {
+			background: #ff5f56;
+			border: 0.5px solid #e0443e;
+		}
+		&.is-yellow {
+			background: #ffbd2e;
+			border: 0.5px solid #dea123;
+		}
+		&.is-green {
+			background: #27c93f;
+			border: 0.5px solid #1aab29;
+		}
+	}
+}
+
+/* ---------------------------- log body ---------------------------- */
+
+.boot-body {
+	height: 332px;
+	transition: height 0.3s ease;
+	padding: 18px 18px 16px;
+	overflow: hidden;
+	background: var(--boot-bg);
+	transition: background-color 0.5s ease;
+	/* scrollback slides under the title bar softly rather than being sliced */
+	mask-image: linear-gradient(to bottom, transparent 0, #000 16px);
+	-webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 16px);
+}
+
+/* returning visitor: only a few lines, so don't leave a half-empty window */
+.boot-root.is-fast {
+	.boot-body {
+		height: 152px;
+	}
+	.boot-hint {
+		animation-delay: 0.35s;
+	}
+}
+
+.boot-log {
+	display: flex;
+	flex-direction: column;
+}
+
+.boot-line {
+	font-size: 13.5px;
+	line-height: 1.62;
+	min-height: 1.62em;
+	white-space: pre-wrap;
+	word-break: break-word;
+	animation: boot-line-in 0.22s ease both;
+}
+
+/* PowerShell */
+.ps-dim {
+	color: #a8b4c8;
+}
+.ps-path {
+	color: #ffe14d;
+}
+.ps-cmd {
+	color: #e8eef7;
+}
+.ps-verb {
+	color: #f2d94e;
+}
+.ps-text {
+	color: #c9d4e3;
+}
+
+/* Ubuntu */
+.ub-user {
+	color: #8ae234;
+}
+.ub-sym {
+	color: #ffffff;
+}
+.ub-dir {
+	color: #729fcf;
+}
+.ub-cmd {
+	color: #d3cfd1;
+}
+.ub-ok {
+	color: #8ae234;
+}
+.ub-text {
+	color: #eeeeec;
+}
+
+/* macOS */
+.mac-dim {
+	color: #8f8f8f;
+}
+.mac-user {
+	color: #36c346;
+}
+.mac-sym {
+	color: #d8d8d8;
+}
+.mac-path {
+	color: #4aa5eb;
+}
+.mac-cmd {
+	color: #d8d8d8;
+}
+.mac-arrow {
+	color: #b281eb;
+}
+.mac-text {
+	color: #d8d8d8;
+}
+.mac-check {
+	color: #36c346;
+}
+.mac-done {
+	color: #f0f0f0;
+}
+
+.sp {
+	color: transparent;
+}
+
+.boot-cursor {
+	display: inline-block;
+	width: 0.56em;
+	height: 1.02em;
+	margin-left: 3px;
+	vertical-align: -0.18em;
+	background: var(--boot-accent);
+	animation: boot-blink 1.05s steps(1) infinite;
+}
+
+/* ---------------------------- status strip ---------------------------- */
+
+.boot-status {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	padding: 11px 16px;
+	background: rgba(0, 0, 0, 0.28);
+	border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.boot-phase {
+	flex: 0 0 auto;
+	min-width: 58px;
+	font-size: 10.5px;
+	letter-spacing: 0.16em;
+	color: rgba(255, 255, 255, 0.55);
+}
+
+.boot-bar {
+	position: relative;
+	flex: 1;
+	height: 7px;
+	border-radius: 2px;
+	background: rgba(255, 255, 255, 0.08);
+	overflow: hidden;
+}
+
+.boot-bar-fill {
+	height: 100%;
+	background-image: repeating-linear-gradient(
+		90deg,
+		var(--boot-accent) 0 6px,
+		transparent 6px 9px
+	);
+	background-size: 9px 100%;
+	box-shadow: 0 0 10px var(--boot-accent-soft);
+	transition: background-image 0.5s ease;
+}
+
+.boot-pct {
+	flex: 0 0 auto;
+	min-width: 42px;
+	text-align: right;
+	font-size: 11.5px;
+	font-variant-numeric: tabular-nums;
+	color: var(--boot-accent);
+	transition: color 0.5s ease;
+}
+
+/* ---------------------------- hint / holding ---------------------------- */
+
+.boot-hint {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	margin-top: 13px;
+	padding: 0 2px;
+	font-size: 11px;
+	letter-spacing: 0.06em;
+	color: rgba(255, 255, 255, 0.3);
+	opacity: 0;
+	animation: boot-fade-in 0.6s ease 1.3s forwards;
+	transition: opacity 0.3s ease;
+}
+
+.boot-hold {
+	color: var(--boot-accent);
+	opacity: 0.8;
+	transition: color 0.5s ease;
+}
+
+.boot-skip {
+	margin-left: auto;
+	white-space: nowrap;
+}
+
+.boot-ellipsis::after {
+	content: '';
+	animation: boot-dots 1.4s steps(1, end) infinite;
+}
+
+/* ---------------------------- keyframes ---------------------------- */
+
+@keyframes boot-crt-on {
+	0% {
+		transform: scaleY(0.006) scaleX(0.86);
+		filter: brightness(2.8);
+		opacity: 0.9;
+	}
+	42% {
+		transform: scaleY(0.05) scaleX(1);
+		filter: brightness(2);
+		opacity: 1;
+	}
+	100% {
+		transform: none;
+		filter: none;
+		opacity: 1;
+	}
+}
+
+@keyframes boot-line-in {
+	from {
+		opacity: 0;
+		transform: translateY(2px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+@keyframes boot-blink {
+	0%,
+	100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0;
+	}
+}
+
+@keyframes boot-fade-in {
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes boot-flicker {
+	0%,
+	96%,
+	100% {
+		opacity: 1;
+	}
+	97% {
+		opacity: 0.72;
+	}
+	98% {
+		opacity: 1;
+	}
+	99% {
+		opacity: 0.85;
+	}
+}
+
+@keyframes boot-sweep {
+	0% {
+		top: -40%;
+	}
+	100% {
+		top: 110%;
+	}
+}
+
+@keyframes boot-dots {
+	0% {
+		content: '';
+	}
+	25% {
+		content: '.';
+	}
+	50% {
+		content: '..';
+	}
+	75% {
+		content: '...';
+	}
+}
+
+/* ---------------------------- responsive ---------------------------- */
+
+@media (max-width: 720px) {
+	.boot-root {
+		padding: 16px;
+	}
+
+	.boot-stack {
+		width: 94vw;
+	}
+
+	.boot-post {
+		font-size: 9.5px;
+		gap: 6px;
+		margin-bottom: 9px;
+	}
+
+	.boot-titlebar {
+		height: 36px;
+	}
+
+	.boot-chrome-left,
+	.boot-chrome-right {
+		min-width: 56px;
+		gap: 6px;
+	}
+
+	.boot-chrome-title {
+		font-size: 11px;
+		max-width: 54%;
+
+		/* flow the title between the two control groups instead of
+		   absolutely centering it — no chance of a collision on narrow screens */
+		&.is-centered {
+			position: static;
+			transform: none;
+			flex: 1 1 auto;
+			min-width: 0;
+			max-width: none;
+			margin: 0 8px;
+			text-align: center;
+		}
+	}
+
+	.boot-body {
+		height: 258px;
+		padding: 12px 13px 14px;
+	}
+
+	.boot-line {
+		font-size: 11.5px;
+		line-height: 1.58;
+		min-height: 1.58em;
+	}
+
+	.boot-status {
+		gap: 10px;
+		padding: 9px 13px;
+	}
+
+	.boot-phase {
+		min-width: 48px;
+		font-size: 9.5px;
+	}
+
+	.boot-hint {
+		font-size: 10px;
+		margin-top: 10px;
+	}
+}
+
+@media (max-width: 420px) {
+	.boot-line {
+		font-size: 10.5px;
+	}
+	.boot-body {
+		height: 232px;
+	}
+}
+
+/* ---------------------------- reduced motion ---------------------------- */
+
+@mixin boot-still {
+	.boot-window,
+	.boot-vignette::before,
+	.boot-vignette::after,
+	.boot-line,
+	.boot-cursor,
+	.boot-ellipsis::after {
+		animation: none;
+	}
+	.boot-post,
+	.boot-hint {
+		animation: none;
+		opacity: 1;
+	}
+	.boot-hint {
+		opacity: 0.3;
+	}
+}
+
+.boot-root.is-reduced {
+	@include boot-still;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.boot-root {
+		@include boot-still;
+	}
+}

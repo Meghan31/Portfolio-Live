@@ -1,0 +1,982 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>BootScreen preview — meghan31 portfolio</title>
+<style>
+/* ---- preview chrome (not part of the component) ---- */
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  background: #f4f5f7;
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #1d2129;
+}
+.mock { position: fixed; inset: 0; display: grid; place-items: center;
+  background: linear-gradient(160deg, #ffffff 0%, #eef4ff 55%, #dbe8ff 100%); }
+.mock-inner { text-align: center; padding: 24px; }
+.mock-brand { font-size: clamp(38px, 8vw, 76px); font-weight: 700; letter-spacing: -0.03em; color: #14203a; }
+.mock-brand span { color: #487dff; }
+.mock-note { margin-top: 10px; font-size: 13px; color: #6b7690; }
+.pv-controls {
+  position: fixed; z-index: 100001; left: 50%; bottom: 18px; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center;
+  padding: 9px 12px; border-radius: 999px;
+  background: rgba(12, 14, 20, 0.9); border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 10px 34px rgba(0,0,0,0.42); backdrop-filter: blur(8px);
+}
+.pv-label, .pv-hint {
+  font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.4); padding: 0 4px;
+}
+.pv-hint { text-transform: none; letter-spacing: 0.02em; }
+.pv-controls button {
+  font: inherit; font-size: 12px; cursor: pointer;
+  padding: 6px 12px; border-radius: 999px;
+  color: #e8ecf5; background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  transition: background 0.18s ease, transform 0.18s ease;
+}
+.pv-controls button:hover { background: rgba(255,255,255,0.16); transform: translateY(-1px); }
+.pv-controls button:active { transform: translateY(0); }
+@media (max-width: 640px) { .pv-hint { display: none; } }
+
+/* ---- compiled from src/boot/boot.scss ---- */
+@charset "UTF-8";
+/* ------------------------------------------------------------------ *
+ *  BootScreen — retro workstation boot overlay
+ *  Palette morphs across three shells via CSS custom properties:
+ *    .boot--ps      Windows PowerShell blue
+ *    .boot--ubuntu  Ubuntu aubergine
+ *    .boot--mac     macOS Terminal black
+ * ------------------------------------------------------------------ */
+.boot-root {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: #06060a;
+  overflow: hidden;
+  opacity: 1;
+  transition: opacity 520ms ease;
+  /* ---- stage palettes ---- */
+  --boot-bg: #012456;
+  --boot-accent: #f2d94e;
+  --boot-accent-soft: rgba(242, 217, 78, 0.28);
+  /* beat the global `* { font-family: 'hw_3d' }` from App.scss */
+}
+.boot-root, .boot-root * {
+  font-family: "SFMono-Regular", "SF Mono", "Menlo", "Monaco", "Consolas", "Ubuntu Mono", "Liberation Mono", "Courier New", monospace;
+  font-variant-ligatures: none;
+}
+.boot-root.boot--ubuntu {
+  --boot-bg: #300a24;
+  --boot-accent: #8ae234;
+  --boot-accent-soft: rgba(138, 226, 52, 0.26);
+}
+.boot-root.boot--mac {
+  --boot-bg: #000000;
+  --boot-accent: #36c346;
+  --boot-accent-soft: rgba(54, 195, 70, 0.26);
+}
+.boot-root.is-exiting {
+  opacity: 0;
+  pointer-events: none;
+}
+.boot-root.is-exiting .boot-window {
+  transform: translateY(-10px) scale(1.015);
+}
+.boot-root.is-exiting .boot-post,
+.boot-root.is-exiting .boot-hint {
+  opacity: 0;
+}
+
+/* ---------------------------- CRT overlay ---------------------------- */
+.boot-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+  background: radial-gradient(ellipse at center, transparent 42%, rgba(0, 0, 0, 0.55) 100%);
+}
+.boot-vignette::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.028) 0 1px, transparent 1px 3px);
+  animation: boot-flicker 7s steps(1) infinite;
+}
+.boot-vignette::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 36%;
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.03), transparent);
+  animation: boot-sweep 7.5s linear infinite;
+}
+
+/* ---------------------------- layout ---------------------------- */
+.boot-stack {
+  position: relative;
+  z-index: 2;
+  width: min(940px, 92vw);
+}
+
+.boot-post {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding-left: 2px;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: #565b68;
+  opacity: 0;
+  animation: boot-fade-in 0.5s ease 0.12s forwards;
+  transition: opacity 0.3s ease;
+}
+
+.boot-post-sep {
+  opacity: 0.5;
+}
+
+/* ---------------------------- window ---------------------------- */
+.boot-window {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--boot-bg);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+  transform-origin: center;
+  transition: background-color 0.5s ease, transform 520ms cubic-bezier(0.4, 0, 0.2, 1);
+  animation: boot-crt-on 0.46s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ---------------------------- title bar ---------------------------- */
+.boot-titlebar {
+  position: relative;
+  height: 40px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+  overflow: hidden;
+}
+
+.boot-chrome {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  opacity: 0;
+  transition: opacity 0.34s ease;
+}
+.boot-chrome.is-active {
+  opacity: 1;
+}
+.boot-chrome--ps {
+  background: #0c2b5b;
+}
+.boot-chrome--ubuntu {
+  background: #3d3d3d;
+}
+.boot-chrome--mac {
+  background: linear-gradient(to bottom, #3a3a3a, #2a2a2a);
+}
+
+.boot-chrome-left,
+.boot-chrome-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 74px;
+}
+
+.boot-chrome-right {
+  justify-content: flex-end;
+}
+
+.boot-chrome-title {
+  font-size: 12.5px;
+  color: #d8d8d8;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 62%;
+}
+.boot-chrome-title.is-centered {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: calc(100% - 190px);
+}
+
+.boot-glyph {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.1;
+  stroke-linecap: round;
+}
+
+.boot-ps-mark {
+  display: inline-flex;
+  align-items: center;
+  font-size: 10.5px;
+  color: #7fd3ff;
+  border: 1px solid rgba(127, 211, 255, 0.38);
+  border-radius: 3px;
+  padding: 1px 4px;
+  margin-right: 4px;
+}
+
+.boot-winbtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 22px;
+  color: rgba(255, 255, 255, 0.7);
+}
+.boot-winbtn.is-close {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.boot-ub-tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #dddddd;
+}
+
+.boot-ubbtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.13);
+  color: #eeeeee;
+}
+
+.boot-mac-dots {
+  gap: 8px;
+}
+.boot-mac-dots .boot-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.boot-mac-dots .boot-dot.is-red {
+  background: #ff5f56;
+  border: 0.5px solid #e0443e;
+}
+.boot-mac-dots .boot-dot.is-yellow {
+  background: #ffbd2e;
+  border: 0.5px solid #dea123;
+}
+.boot-mac-dots .boot-dot.is-green {
+  background: #27c93f;
+  border: 0.5px solid #1aab29;
+}
+
+/* ---------------------------- log body ---------------------------- */
+.boot-body {
+  height: 332px;
+  transition: height 0.3s ease;
+  padding: 18px 18px 16px;
+  overflow: hidden;
+  background: var(--boot-bg);
+  transition: background-color 0.5s ease;
+  /* scrollback slides under the title bar softly rather than being sliced */
+  mask-image: linear-gradient(to bottom, transparent 0, #000 16px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 16px);
+}
+
+/* returning visitor: only a few lines, so don't leave a half-empty window */
+.boot-root.is-fast .boot-body {
+  height: 152px;
+}
+.boot-root.is-fast .boot-hint {
+  animation-delay: 0.35s;
+}
+
+.boot-log {
+  display: flex;
+  flex-direction: column;
+}
+
+.boot-line {
+  font-size: 13.5px;
+  line-height: 1.62;
+  min-height: 1.62em;
+  white-space: pre-wrap;
+  word-break: break-word;
+  animation: boot-line-in 0.22s ease both;
+}
+
+/* PowerShell */
+.ps-dim {
+  color: #a8b4c8;
+}
+
+.ps-path {
+  color: #ffe14d;
+}
+
+.ps-cmd {
+  color: #e8eef7;
+}
+
+.ps-verb {
+  color: #f2d94e;
+}
+
+.ps-text {
+  color: #c9d4e3;
+}
+
+/* Ubuntu */
+.ub-user {
+  color: #8ae234;
+}
+
+.ub-sym {
+  color: #ffffff;
+}
+
+.ub-dir {
+  color: #729fcf;
+}
+
+.ub-cmd {
+  color: #d3cfd1;
+}
+
+.ub-ok {
+  color: #8ae234;
+}
+
+.ub-text {
+  color: #eeeeec;
+}
+
+/* macOS */
+.mac-dim {
+  color: #8f8f8f;
+}
+
+.mac-user {
+  color: #36c346;
+}
+
+.mac-sym {
+  color: #d8d8d8;
+}
+
+.mac-path {
+  color: #4aa5eb;
+}
+
+.mac-cmd {
+  color: #d8d8d8;
+}
+
+.mac-arrow {
+  color: #b281eb;
+}
+
+.mac-text {
+  color: #d8d8d8;
+}
+
+.mac-check {
+  color: #36c346;
+}
+
+.mac-done {
+  color: #f0f0f0;
+}
+
+.sp {
+  color: transparent;
+}
+
+.boot-cursor {
+  display: inline-block;
+  width: 0.56em;
+  height: 1.02em;
+  margin-left: 3px;
+  vertical-align: -0.18em;
+  background: var(--boot-accent);
+  animation: boot-blink 1.05s steps(1) infinite;
+}
+
+/* ---------------------------- status strip ---------------------------- */
+.boot-status {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 11px 16px;
+  background: rgba(0, 0, 0, 0.28);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.boot-phase {
+  flex: 0 0 auto;
+  min-width: 58px;
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.boot-bar {
+  position: relative;
+  flex: 1;
+  height: 7px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.boot-bar-fill {
+  height: 100%;
+  background-image: repeating-linear-gradient(90deg, var(--boot-accent) 0 6px, transparent 6px 9px);
+  background-size: 9px 100%;
+  box-shadow: 0 0 10px var(--boot-accent-soft);
+  transition: background-image 0.5s ease;
+}
+
+.boot-pct {
+  flex: 0 0 auto;
+  min-width: 42px;
+  text-align: right;
+  font-size: 11.5px;
+  font-variant-numeric: tabular-nums;
+  color: var(--boot-accent);
+  transition: color 0.5s ease;
+}
+
+/* ---------------------------- hint / holding ---------------------------- */
+.boot-hint {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 13px;
+  padding: 0 2px;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.3);
+  opacity: 0;
+  animation: boot-fade-in 0.6s ease 1.3s forwards;
+  transition: opacity 0.3s ease;
+}
+
+.boot-hold {
+  color: var(--boot-accent);
+  opacity: 0.8;
+  transition: color 0.5s ease;
+}
+
+.boot-skip {
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.boot-ellipsis::after {
+  content: "";
+  animation: boot-dots 1.4s steps(1, end) infinite;
+}
+
+/* ---------------------------- keyframes ---------------------------- */
+@keyframes boot-crt-on {
+  0% {
+    transform: scaleY(0.006) scaleX(0.86);
+    filter: brightness(2.8);
+    opacity: 0.9;
+  }
+  42% {
+    transform: scaleY(0.05) scaleX(1);
+    filter: brightness(2);
+    opacity: 1;
+  }
+  100% {
+    transform: none;
+    filter: none;
+    opacity: 1;
+  }
+}
+@keyframes boot-line-in {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes boot-blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+@keyframes boot-fade-in {
+  to {
+    opacity: 1;
+  }
+}
+@keyframes boot-flicker {
+  0%, 96%, 100% {
+    opacity: 1;
+  }
+  97% {
+    opacity: 0.72;
+  }
+  98% {
+    opacity: 1;
+  }
+  99% {
+    opacity: 0.85;
+  }
+}
+@keyframes boot-sweep {
+  0% {
+    top: -40%;
+  }
+  100% {
+    top: 110%;
+  }
+}
+@keyframes boot-dots {
+  0% {
+    content: "";
+  }
+  25% {
+    content: ".";
+  }
+  50% {
+    content: "..";
+  }
+  75% {
+    content: "...";
+  }
+}
+/* ---------------------------- responsive ---------------------------- */
+@media (max-width: 720px) {
+  .boot-root {
+    padding: 16px;
+  }
+  .boot-stack {
+    width: 94vw;
+  }
+  .boot-post {
+    font-size: 9.5px;
+    gap: 6px;
+    margin-bottom: 9px;
+  }
+  .boot-titlebar {
+    height: 36px;
+  }
+  .boot-chrome-left,
+  .boot-chrome-right {
+    min-width: 56px;
+    gap: 6px;
+  }
+  .boot-chrome-title {
+    font-size: 11px;
+    max-width: 54%;
+    /* flow the title between the two control groups instead of
+       absolutely centering it — no chance of a collision on narrow screens */
+  }
+  .boot-chrome-title.is-centered {
+    position: static;
+    transform: none;
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: none;
+    margin: 0 8px;
+    text-align: center;
+  }
+  .boot-body {
+    height: 258px;
+    padding: 12px 13px 14px;
+  }
+  .boot-line {
+    font-size: 11.5px;
+    line-height: 1.58;
+    min-height: 1.58em;
+  }
+  .boot-status {
+    gap: 10px;
+    padding: 9px 13px;
+  }
+  .boot-phase {
+    min-width: 48px;
+    font-size: 9.5px;
+  }
+  .boot-hint {
+    font-size: 10px;
+    margin-top: 10px;
+  }
+}
+@media (max-width: 420px) {
+  .boot-line {
+    font-size: 10.5px;
+  }
+  .boot-body {
+    height: 232px;
+  }
+}
+/* ---------------------------- reduced motion ---------------------------- */
+.boot-root.is-reduced .boot-window,
+.boot-root.is-reduced .boot-vignette::before,
+.boot-root.is-reduced .boot-vignette::after,
+.boot-root.is-reduced .boot-line,
+.boot-root.is-reduced .boot-cursor,
+.boot-root.is-reduced .boot-ellipsis::after {
+  animation: none;
+}
+.boot-root.is-reduced .boot-post,
+.boot-root.is-reduced .boot-hint {
+  animation: none;
+  opacity: 1;
+}
+.boot-root.is-reduced .boot-hint {
+  opacity: 0.3;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .boot-root .boot-window,
+  .boot-root .boot-vignette::before,
+  .boot-root .boot-vignette::after,
+  .boot-root .boot-line,
+  .boot-root .boot-cursor,
+  .boot-root .boot-ellipsis::after {
+    animation: none;
+  }
+  .boot-root .boot-post,
+  .boot-root .boot-hint {
+    animation: none;
+    opacity: 1;
+  }
+  .boot-root .boot-hint {
+    opacity: 0.3;
+  }
+}
+
+</style>
+</head>
+<body>
+<div class="mock">
+	<div class="mock-inner">
+		<div class="mock-brand">meghan31<span>.me</span></div>
+		<p class="mock-note">
+			(stand-in for the portfolio homepage — this is what the boot screen
+			hands off to)
+		</p>
+	</div>
+</div>
+
+<div id="host"></div>
+
+<div class="pv-controls">
+	<span class="pv-label">preview</span>
+	<button data-mode="full">▸ full boot</button>
+	<button data-mode="fast">▸ returning visitor</button>
+	<button data-mode="slow">▸ slow assets</button>
+	<span class="pv-hint">click inside the terminal = skip</span>
+</div>
+
+<script>
+	/* Vanilla port of BootScreen.jsx — same script, same timings, same CSS.
+	   Asset loading is simulated here since there are no real assets. */
+
+	var MIN_FULL = 2600, MIN_FAST = 650, MAX_DURATION = 9000, EXIT_MS = 520;
+
+	var PS_PROMPT = [{ t: 'PS C:\\Users\\Meghan31\\portfolio>', c: 'ps-path' }];
+	var UB_PROMPT = [
+		{ t: 'meghan31@dev-workstation', c: 'ub-user' },
+		{ t: ':', c: 'ub-sym' },
+		{ t: '~', c: 'ub-dir' },
+		{ t: '$', c: 'ub-sym' }
+	];
+	var MAC_PROMPT = [
+		{ t: 'meghan31@MacBook-Pro', c: 'mac-user' },
+		{ t: ':', c: 'mac-sym' },
+		{ t: '~/portfolio', c: 'mac-path' },
+		{ t: '$', c: 'mac-sym' }
+	];
+	var HOLDING = [
+		'fetching creative modules',
+		'decompressing rive canvases',
+		'still working — large assets',
+		'almost there'
+	];
+
+	function lastLogin() {
+		var n = new Date(),
+			D = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
+			M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+			p = function (x) { return String(x).padStart(2, '0'); };
+		return D[n.getDay()] + ' ' + M[n.getMonth()] + ' ' + p(n.getDate()) + ' ' +
+			p(n.getHours()) + ':' + p(n.getMinutes()) + ':' + p(n.getSeconds());
+	}
+
+	function fullScript() {
+		return [
+			{ kind:'stage', stage:'ps', phase:'INIT', delay:0 },
+			{ kind:'line', cls:'ps-dim', text:'Windows PowerShell', delay:260 },
+			{ kind:'line', cls:'ps-dim', text:'Copyright (C) 2026 meghan31. All rights reserved.', delay:55 },
+			{ kind:'line', cls:'sp', text:'', delay:40 },
+			{ kind:'type', pre:PS_PROMPT, cls:'ps-cmd', text:' .\\boot.ps1 -Profile Dev', delay:150 },
+			{ kind:'line', cls:'sp', text:'', delay:90 },
+			{ kind:'line', tag:'VERBOSE:', tagCls:'ps-verb', cls:'ps-text', text:' initializing portfolio environment', delay:105 },
+			{ kind:'line', tag:'VERBOSE:', tagCls:'ps-verb', cls:'ps-text', text:' resolving identity ............ meghan31', delay:105 },
+			{ kind:'line', tag:'VERBOSE:', tagCls:'ps-verb', cls:'ps-text', text:' dark mode preference .......... always', delay:105 },
+			{ kind:'line', tag:'VERBOSE:', tagCls:'ps-verb', cls:'ps-text', text:' handing off to unix layer ..... ok', delay:105 },
+			{ kind:'line', cls:'sp', text:'', delay:110 },
+
+			{ kind:'stage', stage:'ubuntu', phase:'MOUNT', delay:200 },
+			{ kind:'type', pre:UB_PROMPT, cls:'ub-cmd', text:' sudo systemctl start portfolio', delay:130 },
+			{ kind:'line', cls:'sp', text:'', delay:90 },
+			{ kind:'line', tag:'[  OK  ]', tagCls:'ub-ok', cls:'ub-text', text:' Mounted /home/meghan31/projects', delay:88 },
+			{ kind:'line', tag:'[  OK  ]', tagCls:'ub-ok', cls:'ub-text', text:' Mounted /home/meghan31/skills', delay:88 },
+			{ kind:'line', tag:'[  OK  ]', tagCls:'ub-ok', cls:'ub-text', text:' Started caffeine.service', delay:88 },
+			{ kind:'line', tag:'[  OK  ]', tagCls:'ub-ok', cls:'ub-text', text:' Loaded 47 unfinished side projects', delay:88 },
+			{ kind:'line', tag:'[  OK  ]', tagCls:'ub-ok', cls:'ub-text', text:' Reached target creative-modules.target', delay:88 },
+			{ kind:'line', cls:'sp', text:'', delay:110 },
+
+			{ kind:'stage', stage:'mac', phase:'LAUNCH', delay:200 },
+			{ kind:'line', cls:'mac-dim', text:'Last login: ' + lastLogin() + ' on ttys001', delay:110 },
+			{ kind:'type', pre:MAC_PROMPT, cls:'mac-cmd', text:' npm run launch', delay:105 },
+			{ kind:'line', cls:'sp', text:'', delay:90 },
+			{ kind:'line', tag:'  \u25B8 ', tagCls:'mac-arrow', cls:'mac-text', text:'starting UI components', delay:100 },
+			{ kind:'line', tag:'  \u25B8 ', tagCls:'mac-arrow', cls:'mac-text', text:'warming rive canvases', delay:100 },
+			{ kind:'line', tag:'  \u25B8 ', tagCls:'mac-arrow', cls:'mac-text', text:'hydrating the good ideas', delay:100 },
+			{ kind:'line', tag:'  \u2714 ', tagCls:'mac-check', cls:'mac-done', text:'booting experience \u2014 welcome in.', delay:170 }
+		];
+	}
+
+	function fastScript() {
+		return [
+			{ kind:'stage', stage:'mac', phase:'RESUME', delay:0 },
+			{ kind:'line', cls:'mac-dim', text:'Last login: ' + lastLogin() + ' on ttys001', delay:200 },
+			{ kind:'type', pre:MAC_PROMPT, cls:'mac-cmd', text:' npm run launch --resume', delay:88 },
+			{ kind:'line', cls:'sp', text:'', delay:100 },
+			{ kind:'line', tag:'  \u25B8 ', tagCls:'mac-arrow', cls:'mac-text', text:'restoring session', delay:120 },
+			{ kind:'line', tag:'  \u2714 ', tagCls:'mac-check', cls:'mac-done', text:'welcome back.', delay:160 }
+		];
+	}
+
+	var G = { MIN_D:'M0 5 H10', MAX_D:'M0.7 0.7 H9.3 V9.3 H0.7 Z', CLOSE_D:'M0.7 0.7 L9.3 9.3 M9.3 0.7 L0.7 9.3' };
+	function glyph(d, size) {
+		return '<svg class="boot-glyph" width="' + (size||10) + '" height="' + (size||10) +
+			'" viewBox="0 0 10 10" aria-hidden="true"><path d="' + d + '"/></svg>';
+	}
+
+	function chromeHTML() {
+		return '' +
+		'<div class="boot-chrome boot-chrome--ps">' +
+			'<div class="boot-chrome-left"><span class="boot-ps-mark"><span>&gt;_</span></span>' +
+			'<span class="boot-chrome-title">Windows PowerShell — portfolio</span></div>' +
+			'<div class="boot-chrome-right boot-win-controls">' +
+			'<span class="boot-winbtn">' + glyph(G.MIN_D) + '</span>' +
+			'<span class="boot-winbtn">' + glyph(G.MAX_D) + '</span>' +
+			'<span class="boot-winbtn is-close">' + glyph(G.CLOSE_D) + '</span></div>' +
+		'</div>' +
+		'<div class="boot-chrome boot-chrome--ubuntu">' +
+			'<div class="boot-chrome-left"><span class="boot-ub-tab">' + glyph('M5 1 V9 M1 5 H9', 9) + '</span></div>' +
+			'<span class="boot-chrome-title is-centered">meghan31@dev-workstation: ~</span>' +
+			'<div class="boot-chrome-right boot-ub-controls">' +
+			'<span class="boot-ubbtn">' + glyph(G.MIN_D, 9) + '</span>' +
+			'<span class="boot-ubbtn">' + glyph(G.MAX_D, 9) + '</span>' +
+			'<span class="boot-ubbtn">' + glyph(G.CLOSE_D, 9) + '</span></div>' +
+		'</div>' +
+		'<div class="boot-chrome boot-chrome--mac">' +
+			'<div class="boot-chrome-left boot-mac-dots">' +
+			'<span class="boot-dot is-red"></span><span class="boot-dot is-yellow"></span><span class="boot-dot is-green"></span></div>' +
+			'<span class="boot-chrome-title is-centered">meghan31 — -zsh — 120×32</span>' +
+			'<div class="boot-chrome-right"></div>' +
+		'</div>';
+	}
+
+	function esc(s) {
+		return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+	}
+
+	var current = null;
+
+	function boot(mode) {
+		if (current) current.destroy();
+
+		var fast = mode === 'fast';
+		var slow = mode === 'slow';
+		var script = fast ? fastScript() : fullScript();
+		var minDur = fast ? MIN_FAST : MIN_FULL;
+		var typeMs = 8;
+
+		var host = document.getElementById('host');
+		host.innerHTML =
+			'<div class="boot-root boot--' + (fast ? 'mac' : 'ps') + (fast ? ' is-fast' : '') + '" role="status">' +
+				'<div class="boot-vignette"></div>' +
+				'<div class="boot-stack">' +
+					'<div class="boot-post"><span>meghan31 BIOS v3.1</span><span class="boot-post-sep">·</span>' +
+					'<span>portfolio workstation</span><span class="boot-post-sep">·</span><span>memory 65536K OK</span></div>' +
+					'<div class="boot-window">' +
+						'<div class="boot-titlebar">' + chromeHTML() + '</div>' +
+						'<div class="boot-body"><div class="boot-log"></div></div>' +
+						'<div class="boot-status"><span class="boot-phase">' + (fast ? 'RESUME' : 'INIT') + '</span>' +
+						'<div class="boot-bar"><div class="boot-bar-fill" style="width:0%"></div></div>' +
+						'<span class="boot-pct">0%</span></div>' +
+					'</div>' +
+					'<div class="boot-hint"><span class="boot-hold"></span>' +
+					'<span class="boot-skip">press any key to skip</span></div>' +
+				'</div>' +
+			'</div>';
+
+		var root = host.querySelector('.boot-root'),
+			log = host.querySelector('.boot-log'),
+			body = host.querySelector('.boot-body'),
+			fill = host.querySelector('.boot-bar-fill'),
+			pctEl = host.querySelector('.boot-pct'),
+			phaseEl = host.querySelector('.boot-phase'),
+			hint = host.querySelector('.boot-hint');
+
+		function setStage(s) {
+			root.className = 'boot-root boot--' + s + (fast ? ' is-fast' : '');
+			host.querySelectorAll('.boot-chrome').forEach(function (c) {
+				c.classList.toggle('is-active', c.classList.contains('boot-chrome--' + s));
+			});
+		}
+		setStage(fast ? 'mac' : 'ps');
+
+		var timers = [], cancelled = false, i = 0, scriptP = 0, scriptDone = false;
+		var start = performance.now(), cur = 0, finished = false, raf = null;
+		var holdIdx = 0, holdTimer = null, holding = false;
+
+		// simulated asset loading: 12 units, ready at ~1.9s (or ~6.5s when "slow")
+		var totalUnits = 12, span = slow ? 6500 : (fast ? 900 : 1900);
+		function assetP() { return Math.min(1, (performance.now() - start) / span); }
+
+		function addLine(ev) {
+			var el = document.createElement('div');
+			el.className = 'boot-line';
+			var html = '';
+			if (ev.pre) ev.pre.forEach(function (s) { html += '<span class="' + s.c + '">' + esc(s.t) + '</span>'; });
+			if (ev.tag) html += '<span class="' + ev.tagCls + '">' + esc(ev.tag) + '</span>';
+			html += '<span class="' + ev.cls + '">' + (ev.kind === 'type' ? '' : esc(ev.text)) + '</span>';
+			if (!ev.text && !ev.pre && !ev.tag) html += '&nbsp;';
+			el.innerHTML = html;
+			host.querySelectorAll('.boot-cursor').forEach(function (c) { c.remove(); });
+			var cur2 = document.createElement('span');
+			cur2.className = 'boot-cursor';
+			el.appendChild(cur2);
+			log.appendChild(el);
+			body.scrollTop = body.scrollHeight;
+			return el;
+		}
+
+		function step() {
+			if (cancelled) return;
+			scriptP = i / script.length;
+			if (i >= script.length) { scriptDone = true; scriptP = 1; return; }
+			var ev = script[i++];
+			timers.push(setTimeout(function () {
+				if (cancelled) return;
+				if (ev.kind === 'stage') { setStage(ev.stage); phaseEl.textContent = ev.phase; step(); return; }
+				if (ev.kind === 'line') { addLine(ev); step(); return; }
+				var el = addLine(ev), target = el.querySelector('.' + ev.cls.split(' ')[0]), n = 0;
+				(function tick() {
+					timers.push(setTimeout(function () {
+						if (cancelled) return;
+						n++;
+						target.textContent = ev.text.slice(0, n);
+						body.scrollTop = body.scrollHeight;
+						if (n < ev.text.length) tick(); else step();
+					}, typeMs));
+				})();
+			}, ev.delay || 0));
+		}
+
+		function finish() {
+			if (finished) return;
+			finished = true;
+			root.classList.add('is-exiting');
+			setTimeout(function () { if (current && current.root === root) host.innerHTML = ''; }, EXIT_MS);
+		}
+
+		function loop() {
+			if (cancelled) return;
+			var elapsed = performance.now() - start, ap = assetP();
+			var timedOut = elapsed >= MAX_DURATION;
+			var ready = scriptDone && ap >= 1 && elapsed >= minDur;
+			var nowHolding = scriptDone && ap < 1 && !timedOut;
+			if (nowHolding !== holding) {
+				holding = nowHolding;
+				var hold = hint.querySelector('.boot-hold');
+				if (holding) {
+					hold.innerHTML = HOLDING[holdIdx] + '<span class="boot-ellipsis"></span>';
+					holdTimer = setInterval(function () {
+						holdIdx = (holdIdx + 1) % HOLDING.length;
+						var h = hint.querySelector('.boot-hold');
+						if (h) h.innerHTML = HOLDING[holdIdx] + '<span class="boot-ellipsis"></span>';
+					}, 1500);
+				} else { clearInterval(holdTimer); hold.innerHTML = ''; }
+			}
+			var target = (ready || timedOut) ? 100 : Math.min(scriptP, ap) * 97;
+			cur += (target - cur) * 0.14;
+			if (target === 100 && cur > 99.5) cur = 100;
+			fill.style.width = Math.min(100, cur) + '%';
+			pctEl.textContent = Math.round(cur) + '%';
+			if (cur >= 100) { clearInterval(holdTimer); finish(); return; }
+			raf = requestAnimationFrame(loop);
+		}
+
+		var onSkip = function () { finish(); };
+		root.addEventListener('mousedown', onSkip);
+		window.addEventListener('keydown', onSkip);
+
+		step();
+		raf = requestAnimationFrame(loop);
+
+		current = {
+			root: root,
+			destroy: function () {
+				cancelled = true;
+				timers.forEach(clearTimeout);
+				clearInterval(holdTimer);
+				if (raf) cancelAnimationFrame(raf);
+				window.removeEventListener('keydown', onSkip);
+				host.innerHTML = '';
+			}
+		};
+	}
+
+	document.querySelectorAll('.pv-controls button').forEach(function (b) {
+		b.addEventListener('click', function (e) {
+			e.stopPropagation();
+			boot(b.dataset.mode);
+		});
+	});
+
+	boot('full');
+</script>
+
+</body>
+</html>

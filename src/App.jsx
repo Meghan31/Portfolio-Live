@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './app.scss';
 
+import BootScreen from './boot/BootScreen';
 import Home from './Home';
 import AIMLDevPage from './projects/pages/AiMlPage';
 import AppDevPage from './projects/pages/AppDevPage';
@@ -11,6 +12,10 @@ import RecentProjects from './recent-projects/RecentProjects';
 // import Projects from "./projects/Projects";
 
 const App = () => {
+	// Boot overlay gates the site on first paint; it buys time while the
+	// hero images and .riv files warm up, then lifts.
+	const [booted, setBooted] = useState(false);
+
 	// const cursorRef = useRef(null);
 	const dotsRef = useRef([]);
 	const requestRef = useRef();
@@ -151,6 +156,8 @@ const App = () => {
 
 	return (
 		<>
+			{!booted && <BootScreen onFinish={() => setBooted(true)} />}
+
 			<Router>
 				<Routes>
 					<Route path="/" element={<Home />} />
@@ -163,7 +170,7 @@ const App = () => {
 				</Routes>
 			</Router>
 
-			<PopupNotification />
+			{booted && <PopupNotification />}
 		</>
 	);
 };
