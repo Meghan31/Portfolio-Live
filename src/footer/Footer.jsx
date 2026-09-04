@@ -10,14 +10,14 @@ const Footer = () => {
 					className="footer-icon"
 					onClick={() => window.open('https://github.com/Meghan31', '_blank')}
 				/>
-				<img
+				{/* <img
 					src="/assets/svg/linkedin.svg"
 					alt="Logo"
 					className="footer-icon"
 					onClick={() =>
 						window.open('https://www.linkedin.com/in/meghan31/', '_blank')
 					}
-				/>
+				/> */}
 				<img
 					src="/assets/svg/Skills/leetcode.svg"
 					alt="Logo"

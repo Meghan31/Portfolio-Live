@@ -1,11 +1,11 @@
 ---
 ---
 
-# [Portfolio](https://meghan31.live)
+# [Portfolio](https://meghan31.me)
 
 Welcome to my personal portfolio! This project showcases my skills, experience, and the projects I have worked on. It is a snapshot of my journey as a Software Developer, UX Designer, Data Scientist, highlighting my expertise, creativity, and problem-solving abilities.
 
-## [Visit Portfolio](https://meghan31.live)
+## [Visit Portfolio](https://meghan31.me)
 
 ---
 
@@ -28,8 +28,7 @@ Welcome to my personal portfolio! This project showcases my skills, experience, 
 Feel free to reach out with opportunities, feedback, or collaboration ideas:
 
 - **Email**: [meghasrivardhanp@gmail.com](mailto:meghasrivardhanp@gmail.com)
-- **LinkedIn**: [LinkedIn Profile](https://www.linkedin.com/in/meghan31/)
-- **Portfolio**: [Portfolio Website](https://meghan31.live)
+- **Portfolio**: [Portfolio Website](https://meghan31.me)
 
 ---
 

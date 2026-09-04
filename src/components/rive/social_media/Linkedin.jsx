@@ -12,15 +12,15 @@ export default function Linkedin() {
 
 		{
 			shouldResizeCanvasToContainer: true,
-		}
+		},
 	);
 
 	return (
 		<div
 			className="rive-linkedin"
-			onClick={() =>
-				window.open('https://www.linkedin.com/in/meghan31/', '_blank')
-			}
+			// onClick={() =>
+			// 	window.open('https://www.linkedin.com/in/meghan31/', '_blank')
+			// }
 		>
 			<RiveComponent />
 		</div>
