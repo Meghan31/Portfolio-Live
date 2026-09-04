@@ -174,7 +174,7 @@ const ContactMob = () => {
 							</div>
 							<div className="info-content">
 								<h2>Address</h2>
-								<span>Boulder, CO 80302</span>
+								<span>Based in the United States</span>
 							</div>
 						</div>
 						{/* <div className="info-item">

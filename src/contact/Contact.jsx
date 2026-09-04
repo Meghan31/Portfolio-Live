@@ -47,7 +47,7 @@ const Contact = () => {
 	const secondsRemaining = () => {
 		const now = Date.now();
 		const diff = Math.ceil(
-			(RATE_LIMIT_SECONDS * 1000 - (now - lastSent)) / 1000
+			(RATE_LIMIT_SECONDS * 1000 - (now - lastSent)) / 1000,
 		);
 		return diff > 0 ? diff : 0;
 	};
@@ -68,7 +68,7 @@ const Contact = () => {
 			const secs = secondsRemaining();
 			showTemporaryPopup(
 				`Please wait ${secs}s before sending again (60s limit).`,
-				'info'
+				'info',
 			);
 			return;
 		}
@@ -102,7 +102,7 @@ const Contact = () => {
 				'service_yzzvxt8',
 				'template_afzlwkl',
 				formRef.current,
-				'_nz2V_63IJghT6BSH'
+				'_nz2V_63IJghT6BSH',
 			);
 
 			setSuccess(true);
@@ -133,7 +133,7 @@ const Contact = () => {
 				</motion.div>
 				<motion.div className="item" variants={variants}>
 					<h2>Address</h2>
-					<span>Boulder, CO 80302</span>
+					<span> Based in the United States</span>
 				</motion.div>
 				{/* <motion.div className="item" variants={variants}>
 					<h2>Phone</h2>
